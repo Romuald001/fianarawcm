@@ -1,0 +1,47 @@
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/config');
+
+const Toilet = sequelize.define('Toilet', {
+    id: { 
+        type: DataTypes.INTEGER, 
+        autoIncrement: true, 
+        primaryKey: true 
+    },
+    name: {
+        type: DataTypes.STRING(255),
+        allowNull: true
+    },
+    description: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
+    lat: {
+        type: DataTypes.DECIMAL(9,6),
+        allowNull: false
+    },
+    lng: {
+        type: DataTypes.DECIMAL(9,6),
+        allowNull: false
+    },
+    isFree: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
+    },
+    isAccessible: {
+        type: DataTypes.BOOLEAN, 
+        defaultValue: false 
+    },
+    cleanliness: {
+        type: DataTypes.ENUM('good', 'average', 'bad'),
+        defaultValue: 'average'
+    },
+    status: {
+        type: DataTypes.ENUM('pending', 'approved', 'rejected'),
+        defaultValue: 'pending'
+    }
+}, {
+    tableName: 'toilet',
+    timestamps: true
+});
+
+module.exports = Toilet;
