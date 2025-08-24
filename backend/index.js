@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { sequelize } = require('./models')
+const { sequelize } = require('./models');
 require('dotenv').config();
 
 const app = express();
@@ -9,9 +9,11 @@ app.use(express.json());
 
 // Import des routes
 const userRoutes = require('./routes/UserRoutes');
+const toiletRoutes = require('./routes/ToiletRoutes');
 
 // routes
 app.use('/api/users', userRoutes);
+app.use('/api/toilets', toiletRoutes);
 
 // 1) Test explicite de connexion
 (async () => {

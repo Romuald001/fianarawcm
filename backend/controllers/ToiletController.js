@@ -28,3 +28,43 @@ exports.createdPending = async (req, res) => {
         res.status(500).json({ error: e.message });
     }
 };
+
+// Admin/mod: voir pending
+exports.listPending = async (req, res) => {
+    try {
+        const q = await Toilet.findAll({
+            where: {status: 'pending'},
+            include: {model: User, attributes: ['id', 'username'] },
+            order: [['createdAt', 'DESC']]
+        });
+        res.json(q);
+    } catch (e) {
+        res.status(500).json({ error: e.message});
+    }
+};
+
+// Admin/mod: approuver
+exports.approve = async (req, res) => {
+    try {
+        const t = await Toilet.findByPk(req.params.id);
+        if (!t) return res.status(404).json({ error: 'Not found'});
+        t.status = 'approved';
+        await t.save();
+        res.json(t);
+    } catch (e) {
+        res.status(500).json({ error: e.message});
+    }
+};
+
+// Admin/mod: rejeter
+exports.reject = async (req, res) => {
+    try {
+        const t = await Toilet.findByPk(req.params.id);
+        if (!t) return res.status(404).json({ error: 'not found'});
+        t.status = 'rejected';
+        await t.save();
+        res.json(t);
+    } catch (e) {
+        res.status(500).json({ error: e.message});
+    }
+};
