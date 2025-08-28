@@ -38,7 +38,15 @@ const Toilet = sequelize.define('Toilet', {
     status: {
         type: DataTypes.ENUM('pending', 'approved', 'rejected'),
         defaultValue: 'pending'
+    },
+    createdBy: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: { model: 'users', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
     }
+    
 }, {
     tableName: 'toilet',
     timestamps: true

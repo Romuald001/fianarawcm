@@ -12,7 +12,7 @@ router.post('/', auth, createdPending);
 
 // Admin/Mod: (moderation)
 router.get('/pending', auth, requireRole('moderator', 'admin'), listPending);
-router.patch('/:id/approved', auth, requireRole('moderatore', 'admin'), approve);
-router.patch('/:id/rejected', auth, requireRole('moderatore', 'admin'), reject);
+router.patch('/:id/approved', auth, requireRole('moderator', 'admin'), approve);
+router.patch('/:id/rejected', auth, requireRole('moderator', 'admin'), reject);
 
 module.exports = router;

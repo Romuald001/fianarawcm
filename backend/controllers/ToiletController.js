@@ -18,9 +18,9 @@ exports.listApproved = async (req, res) => {
 // Auth ( user, moderator, admin ): creer -> pending
 exports.createdPending = async (req, res) => {
     try{
-        const { name, description, lat, lng, isFree, isAccessible, cleanLiness } = req.body;
+        const { name, description, lat, lng, isFree, isAccessible, cleanliness } = req.body;
         const t = await Toilet.create({
-            name, description, lat, lng, isFree, isAccessible, cleanLiness,
+            name, description, lat, lng, isFree, isAccessible, cleanliness,
             status: 'pending', createdBy: req.user.id
         });
         res.status(201).json(t);

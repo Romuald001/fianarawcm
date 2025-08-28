@@ -22,7 +22,7 @@ app.use('/api/toilets', toiletRoutes);
         console.log('✅ MySQL connecté avec succès');
 
         // 2) Synchronisation des modèles -> tables
-        await sequelize.sync({ force : true});
+        await sequelize.sync({ alter : true});
         console.log('🗂️  Modèles synchronisés');
 
         // 3) Lancement serveur
