@@ -48,7 +48,7 @@ const Toilet = sequelize.define('Toilet', {
     }
     
 }, {
-    tableName: 'toilet',
+    tableName: 'toilets',
     timestamps: true
 });
 
