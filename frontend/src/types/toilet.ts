@@ -12,6 +12,6 @@ export interface Toilet {
     cleanliness?: Cleanliness;
     status?: Status;
     createdBy?: number;
-    cretedAt?: string;
+    createdAt?: string;
     updatedAt?: string;
 };
