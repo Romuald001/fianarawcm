@@ -1,28 +1,32 @@
-//  Sauvegarde locale (localeForage) + sync vers backend
 import localforage from "localforage";
 import type { Toilet } from "../types/toilet";
 import { toilet } from '../services/toilet.api';
 
-//  cree une base "toilet-app" et un store "pending"
-localforage.config({ name: 'toilets-app', storeName: 'peding' });
+//  configuration localforage : base 'toilets-app', store 'pending'
+localforage.config({ name: 'toilets-app', storeName: 'pending' });
 
 export async function savePendingToilet(t: Partial<Toilet>) {
-    //  lit la file d'attente locale->ajoute l'element->reecrit le store
+    //  lire la file (ou tableau vide)
     const arr = (await localforage.getItem<Partial<Toilet>[]>('pending')) || [];
-    arr.push({ ...t, createdAt: new Date().toISOString() });    //  ajouter un timestamp local
-    await localforage.setItem('pending', arr);  //  persiste la nouvellle liste
+    //  ajouter timestamp local "createdAt"
+    arr.push({ ...t, createdAt: new Date().toISOString() });
+    await localforage.setItem('pending', arr); 
 };
 
 export async function syncPendingToilets() {
-    if (!navigator.onLine) return;  //  si offline->sortir silencieusement
-    const arr = (await localforage.getItem<Partial<Toilet>[]>('pending')) || [];    //  recupere la file
+    if (!navigator.onLine) return;  // si hors-ligne, on sort
+    const arr = (await localforage.getItem<Partial<Toilet>[]>('pending')) || [];
     if (!arr.length) return;    //  rien a synchroniser
+    
     for (const p of arr) {
         try {
-            await toilet.createToilet(p);    //  POST au backend
+            // POST vers backend via service centralisé
+            await toilet.createToilet(p);
         } catch (err) {
-            console.error('Sync failed for item', p, err);  //  log, mais on continue
+            // log et on continue : ne pas bloquer les autres éléments
+            console.error('Sync failed for item', p, err);
         }
     }
-    await localforage.removeItem('pending');    //  purge la file si OK
+    // si tout s'est bien passé, on purge la file locale
+    await localforage.removeItem('pending');
 };

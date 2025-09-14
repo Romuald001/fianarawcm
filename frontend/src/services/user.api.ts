@@ -22,7 +22,7 @@ export const userApi = {
 
     // POST /api/users/register => {id, username, email, role}
     register: async (payload: RegisterPayload) => {
-        const res = await http.post('users/register', payload); // creation d'utilisateur
+        const res = await http.post('/users/register', payload); // creation d'utilisateur
         return res.data; 
     },
 };
