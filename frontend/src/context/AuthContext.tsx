@@ -1,19 +1,23 @@
-import { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState, useContext } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import type { User } from '../types/user';
+import { userApi } from '../services/user.api';
+import http from '../services/http';
+
 
 
 // Typage du contexte
 
-interface AuthContextValue {
+interface AuthContextType {
     user: User | null;                      
     token: string | null;                   
-    login: (token: string) => void;
+    loginWithEmail: (email: string, password: string) => Promise<void>;
+    registerWithEmail: (username: string, email: string, password: string) => Promise<void>;
     logout: () => void;
 };
 
 // contexte vide par defaut
-export const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // provider
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -26,8 +30,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (storedToken) {
             try {
                 const decoded: User = jwtDecode(storedToken);
-                setUser(decoded);
+                setUser({
+                    id: decoded.id,
+                    username: decoded.username,
+                    email: decoded.email || "",
+                    role: decoded.role,
+                });
                 setToken(storedToken);
+                http.defaults.headers.common.Authorization = `Bearer $(storedToken)`;
             } catch (error) {
                 console.error("token invalide : ", error);
                 localStorage.removeItem("token");
@@ -36,29 +46,47 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
     
     // fonctiom login
-    const login = (newToken: string) => {
-        try {
-            const decoded: User = jwtDecode(newToken);
-            setUser(decoded);
-            setToken(newToken);
-            localStorage.setItem("token", newToken);
-        } catch(error) {
-            console.error("Erreur lors du décodage du token:", error);
-        }
+    const loginWithEmail = async (email: string, password: string) => {
+            const { token } = await userApi.login({ email, password });
+            localStorage.setItem("token", token);
+            setToken(token);
+            const decoded: any = jwtDecode(token);
+            setUser({
+                id: decoded.id,
+                username: decoded.username,
+                email: decoded.email,
+                role: decoded.role,
+            });
+            http.defaults.headers.common.Authorization = `Bearer ${token}`; 
     };
+
+    // fonction register
+    const registerWithEmail = async (username: string, email: string, password: string) => {
+        await userApi.register({ username, email, password });
+        await loginWithEmail(email, password );
+    }
 
     // fonction logout
     const logout = () => {
         setToken(null);
         setUser(null);
         localStorage.removeItem('token');
+        delete http.defaults.headers.common.Authorization;
     };
 
 
     return (
-        <AuthContext.Provider value={{ user, token, login, logout}}>
+        <AuthContext.Provider value={{ user, token, loginWithEmail, registerWithEmail, logout}}>
             {children}
         </AuthContext.Provider>
     );
 
+};
+
+export const useAuth = (): AuthContextType => {
+    const context = useContext(AuthContext);
+    if (!context) {
+        throw new Error("useAuth doit être utilisé à l'intérieur d'un AuthProvider");
+    }
+    return context;
 };
