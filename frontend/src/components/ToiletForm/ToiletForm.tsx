@@ -2,6 +2,7 @@ import React, { useState} from "react";
 import type { Toilet } from "../../types/toilet";
 import { toilet } from "../../services/toilet.api";
 import { savePendingToilet } from "../../utils/offline";
+import '../ToiletForm/ToiletForm.scss';
 
 // Props: coordonnées initiales pour le marker ou click sur carte
 interface ToiletFormProps {
@@ -14,7 +15,7 @@ interface ToiletFormProps {
 const ToiletForm: React.FC<ToiletFormProps> = ({ lat, lng, onSuccess, onClose }) => {
     // Etats du formulaire
     const [name, setName] = useState<string>("");
-    const [description, setDescription] = useState<String>("");
+    const [description, setDescription] = useState<string>("");
     const [isFree, setIsFree] = useState<boolean>(true);
     const [isAccessible, setIsAccessible] = useState<boolean>(false);
     const [cleanliness, setCleanliness] = useState<"good" | "average" | "bad">("good");
@@ -52,6 +53,7 @@ const ToiletForm: React.FC<ToiletFormProps> = ({ lat, lng, onSuccess, onClose })
             setIsFree(true);
             setIsAccessible(false);
             setCleanliness("good");
+            if (onClose) onClose();
         } catch (err: any) {
             console.error(err);
             setError(err?.response?.data.message || "Erreur lors de la création");
@@ -63,34 +65,45 @@ const ToiletForm: React.FC<ToiletFormProps> = ({ lat, lng, onSuccess, onClose })
     return (
         <form className="toilet-form" onSubmit={handleSubmit}>
             <h3>Ajouter une toilette</h3>
-            <div className="error"></div>
-            <label htmlFor="">
+
+            {error && <div className="error">{error}</div>}
+
+            <label>
                 Nom
-                <input type="text" />
+                <input value={name} onChange={(e) => setName(e.target.value)} required />
             </label>
 
-            <label htmlFor="">
+            <label>
                 Description
-                <textarea name="" id=""></textarea>
+                <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
             </label>
 
-            <label htmlFor="">
+            <label>
                 Gratuit ?
-                <input type="text" />
+                <input type="checkbox" checked={isFree} onChange={(e) => setIsFree(e.target.checked)} />
             </label>
 
-            <label htmlFor="">
+            <label>
                 Accessible PMR ?
-                <input type="text" />
+                <input 
+                type="checkbox"
+                checked={isAccessible}
+                onChange={(e) => setIsAccessible(e.target.checked)}
+                />
             </label>
 
-            <label htmlFor="">
+            <label>
                 Propreté
+                <select value={cleanliness} onChange={(e) => setCleanliness(e.target.value as any)}>
+                    <option value="good">Bonne</option>
+                    <option value="average">Moyenne</option>
+                    <option value="bad">Mauvaise</option>
+                </select>
             </label>
 
 
-            <button>
-                Ajouter
+            <button type="submit" disabled={loading}>
+                {loading ? "Création..." : "Ajouter"}
             </button>
         </form>
     );
