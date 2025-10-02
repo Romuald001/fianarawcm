@@ -23,13 +23,13 @@ export const toilet = {
 
     approve: async (id: number) => {
         // PACTCH /api/toilets/:id/approved: passe en "approuved"
-        const res = await http.patch( `/toilets/${id}/approuved`, {});
+        const res = await http.patch( `/toilets/${id}/approved`, {});
         return res.data;
     },
 
     reject: async (id: number) => {
         // PATCH /api/toilets/:id/rejeced: passe en "rejected"
-        const res = await http.patch(`/toilets/${id}/reject`, {});
+        const res = await http.patch(`/toilets/${id}/rejected`, {});
         return res.data;
     },
 

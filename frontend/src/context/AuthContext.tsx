@@ -45,7 +45,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     }, []);
     
-    // fonctiom login
+    // fonction login
     const loginWithEmail = async (email: string, password: string) => {
             const { token } = await userApi.login({ email, password });
             localStorage.setItem("token", token);
@@ -57,7 +57,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 email: decoded.email,
                 role: decoded.role,
             });
-            http.defaults.headers.common.Authorization = `Bearer ${token}`; 
+           ( http.defaults.headers as any ).common.Authorization = `Bearer ${token}`; 
     };
 
     // fonction register
