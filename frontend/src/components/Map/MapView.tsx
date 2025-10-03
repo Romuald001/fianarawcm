@@ -4,15 +4,14 @@ import L from "leaflet";
 import ToiletForm from "../ToiletForm/ToiletForm";
 import type { Toilet } from "../../types/toilet";
 
-import "leaflet/dist/leftlet.css";
+import "leaflet/dist/leaftlet.css";
 
 // Correction icone Leaflet par defaut
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
     iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
     iconUrl: require("leaflet/dist/images/marker-icon.png"),
-    shadowUrl: 
-    ("leaflet/dist/images/marker-shadow.png"),
+    shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
 });
 
 
