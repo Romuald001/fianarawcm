@@ -10,7 +10,8 @@ import http from '../services/http';
 
 interface AuthContextType {
     user: User | null;                      
-    token: string | null;                   
+    token: string | null;
+    role: string | null;                   
     loginWithEmail: (email: string, password: string) => Promise<void>;
     registerWithEmail: (username: string, email: string, password: string) => Promise<void>;
     logout: () => void;
@@ -23,6 +24,7 @@ export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [token, setToken]= useState<string | null>(null);
     const [user, setUser] = useState<User | null>(null);
+    const [role, setRole] = useState<string | null>(null);
 
    // verifier le token dans localstorage au demarrage
     useEffect(() => {
@@ -70,13 +72,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const logout = () => {
         setToken(null);
         setUser(null);
+        setRole(null);
         localStorage.removeItem('token');
         delete http.defaults.headers.common.Authorization;
     };
 
 
     return (
-        <AuthContext.Provider value={{ user, token, loginWithEmail, registerWithEmail, logout}}>
+        <AuthContext.Provider value={{ user, token, role, loginWithEmail, registerWithEmail, logout}}>
             {children}
         </AuthContext.Provider>
     );
