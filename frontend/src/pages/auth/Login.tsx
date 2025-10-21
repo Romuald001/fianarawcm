@@ -1,6 +1,6 @@
 import React,{ useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./Login.scss";
 
 const Login: React.FC = () => {
@@ -39,6 +39,11 @@ const Login: React.FC = () => {
                 </label>
 
                 <button type="submit" disabled={loading}>{loading ? "Connexion..." : "Se connecter"}</button>
+
+                <div className="auth-footer">
+                    <span>Pas encore de compte ? </span>
+                    <Link to="/register">S'inscrire</Link>
+                </div>
             </form>
         </div>
     );

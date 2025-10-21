@@ -29,6 +29,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
    // verifier le token dans localstorage au demarrage
     useEffect(() => {
         const storedToken = localStorage.getItem("token");
+     
         if (storedToken) {
             try {
                 const decoded: User = jwtDecode(storedToken);
@@ -39,6 +40,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     role: decoded.role,
                 });
                 setToken(storedToken);
+                setRole(decoded.role);
                 http.defaults.headers.common.Authorization = `Bearer $(storedToken)`;
             } catch (error) {
                 console.error("token invalide : ", error);
@@ -59,6 +61,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 email: decoded.email,
                 role: decoded.role,
             });
+            setRole(decoded.role);
            ( http.defaults.headers as any ).common.Authorization = `Bearer ${token}`; 
     };
 

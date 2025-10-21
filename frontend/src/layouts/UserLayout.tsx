@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import "./UserLayout.scss";
 
 const UserLayout = () => {
@@ -25,7 +25,7 @@ const UserLayout = () => {
                         Ajouter une toilette
                     </NavLink>
                 
-                    <NavLink to="my-cotributions" className={({ isActive}) => isActive ? "active" : ""}>
+                    <NavLink to="/cotributions" className={({ isActive}) => isActive ? "active" : ""}>
                         Mes contributions
                     </NavLink>
 
@@ -34,8 +34,12 @@ const UserLayout = () => {
             </header>
 
             <main className="content">
-                outl
+                <Outlet />
             </main>
+
+            <footer className="footer">
+                <p>© {new Date().getFullYear()} Toilet Finder — Tous droits réservés</p>
+            </footer>
         </div>
     );
 };

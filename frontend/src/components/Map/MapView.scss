@@ -4,3 +4,81 @@
     border-radius: 8px;
     z-index: 0;
 }
+/* === Popup personnalisé === */
+.toilet-popup {
+  .leaflet-popup-content-wrapper {
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    padding: 0;
+  }
+
+  .leaflet-popup-content {
+    margin: 0;
+    padding: 1rem 1.2rem;
+    font-family: "Inter", sans-serif;
+    color: #333;
+  }
+
+  .popup-content {
+    h4 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #007bff;
+      text-align: center;
+    }
+
+    .desc {
+      font-size: 0.9rem;
+      color: #555;
+      text-align: justify;
+      margin-bottom: 0.8rem;
+    }
+
+    .details {
+      background: #f7faff;
+      border-radius: 10px;
+      padding: 0.6rem 0.8rem;
+      font-size: 0.85rem;
+      color: #444;
+      line-height: 1.4;
+
+      p {
+        margin: 0.3rem 0;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+
+        strong {
+          color: #222;
+          font-weight: 600;
+        }
+      }
+
+      .clean {
+        font-weight: 600;
+        text-transform: capitalize;
+        padding: 2px 6px;
+        border-radius: 6px;
+
+        &.good {
+          background: #d4edda;
+          color: #155724;
+        }
+        &.average {
+          background: #fff3cd;
+          color: #856404;
+        }
+        &.bad {
+          background: #f8d7da;
+          color: #721c24;
+        }
+      }
+    }
+  }
+
+  .leaflet-popup-tip {
+    background: #fff;
+  }
+}

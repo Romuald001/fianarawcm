@@ -1,0 +1,96 @@
+.home-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, #e8f0ff, #f9fbff);
+  color: #2b2d42;
+
+  .hero {
+    width: 100%;
+    background: linear-gradient(135deg, #4a90e2, #007bff);
+    color: white;
+    border-radius: 1rem;
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+    .hero-text {
+      max-width: 800px;
+      margin: 0 auto;
+
+      h1 {
+        font-size: 2.2rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+      }
+
+      p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+      .add-btn {
+        background-color: white;
+        color: #007bff;
+        font-weight: 600;
+        border: none;
+        border-radius: 50px;
+        padding: 0.8rem 1.8rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+
+        &:hover {
+          background-color: #0056d6;
+          color: white;
+          transform: scale(1.05);
+          box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+      }
+    }
+  }
+
+  .info-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+    max-width: 800px;
+    text-align: center;
+
+    h2 {
+      color: #007bff;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: #555;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+  }
+
+  .map-title {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    color: #2b2d42;
+  }
+
+  .leaflet-container {
+    width: 100%;
+    height: 75vh;
+    border-radius: 0.8rem;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+  }
+
+  .error {
+    color: red;
+    margin: 1rem 0;
+    font-weight: 500;
+  }
+}

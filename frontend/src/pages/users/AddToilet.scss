@@ -1,0 +1,154 @@
+.add-toilet-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e8f0ff, #f9fbff);
+  animation: fadeIn 0.8s ease-in-out;
+
+  .hero {
+    text-align: center;
+    margin-bottom: 2rem;
+    h1 {
+      font-size: 2rem;
+      color: #007bff;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      font-size: 1rem;
+      color: #444;
+    }
+  }
+
+  .toilet-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    width: 500px;
+    max-height: 750px;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    h3 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      font-weight: 500;
+      color: #444;
+
+      input,
+      textarea,
+      select {
+        margin-top: 0.3rem;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+
+        &:focus {
+          border-color: #007bff;
+          box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+          outline: none;
+        }
+      }
+
+      textarea {
+        min-height: 60px;
+        resize: none;
+      }
+
+      input[type="checkbox"] {
+        width: auto;
+        margin-top: 0.3rem;
+      }
+    }
+
+    .coord-inputs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hint {
+      font-size: 0.8rem;
+      color: #666;
+      background: #f4f6f8;
+      padding: 0.5rem;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      margin-top: 0.5rem;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: #0056b3;
+        transform: scale(1.02);
+      }
+
+      &:disabled {
+        background: #aaa;
+        cursor: not-allowed;
+      }
+    }
+
+    .error {
+      color: #c0392b;
+      background: #ffe5e5;
+      padding: 0.4rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+  }
+
+  .tip {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: #555;
+    background: #e6f0ff;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 500px;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

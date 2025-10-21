@@ -1,0 +1,98 @@
+.toilet-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  width: 230px; /* ✅ largeur adaptée au popup */
+  max-height: 500px; /* limite la hauteur */
+  overflow-y: auto; /* scroll si trop de contenu */
+  background: #fff;
+  border-radius: 10px;
+
+  h3 {
+    margin-top: 0;
+    font-size: 1rem;
+    color: #333;
+    text-align: center;
+  }
+
+  label {
+    font-size: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    color: #444;
+
+    input,
+    textarea,
+    select {
+      margin-top: 0.2rem;
+      padding: 0.35rem 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      resize: none;
+
+      &:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+    }
+
+    textarea {
+      min-height: 40px;
+    }
+
+    input[type="checkbox"] {
+      width: auto;
+      margin-top: 0.3rem;
+    }
+  }
+
+  .coord-inputs {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+  }
+
+  .hint {
+    font-size: 0.75rem;
+    color: #666;
+    background: #f8f9fa;
+    padding: 0.3rem 0.5rem;
+    border-radius: 6px;
+    text-align: center;
+  }
+
+  button {
+    margin-top: 0.5rem;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.45rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #0056b3;
+    }
+
+    &:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+  }
+
+  .error {
+    color: #c0392b;
+    background: #f9d6d5;
+    padding: 0.4rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+}

@@ -14,6 +14,9 @@ interface ToiletFormProps {
 
 const ToiletForm: React.FC<ToiletFormProps> = ({ lat, lng, onSuccess, onClose }) => {
     // Etats du formulaire
+    const [latitude, setLatitude] = useState<number>(lat);
+    const [longitude, setLongitude] = useState<number>(lng);
+
     const [name, setName] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [isFree, setIsFree] = useState<boolean>(true);
@@ -30,8 +33,8 @@ const ToiletForm: React.FC<ToiletFormProps> = ({ lat, lng, onSuccess, onClose })
         const payload: Partial<Toilet> = {
             name,
             description,
-            lat,
-            lng,
+            lat : latitude,
+            lng : longitude,
             isFree,
             isAccessible,
             cleanliness,
@@ -77,6 +80,34 @@ const ToiletForm: React.FC<ToiletFormProps> = ({ lat, lng, onSuccess, onClose })
                 Description
                 <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
             </label>
+
+            <div className="coord-inputs">
+                <label>
+                Latitude
+                <input
+                    type="number"
+                    step="0.000001"
+                    value={latitude}
+                    onChange={(e) => setLatitude(parseFloat(e.target.value))}
+                    required
+                />
+                </label>
+
+                <label>
+                Longitude
+                <input
+                    type="number"
+                    step="0.000001"
+                    value={longitude}
+                    onChange={(e) => setLongitude(parseFloat(e.target.value))}
+                    required
+                />
+                </label>
+            </div>
+
+            <small className="hint">
+                👉 Vous pouvez <strong>cliquer sur la carte</strong> pour remplir automatiquement les coordonnées, ou les saisir manuellement.
+            </small>
 
             <label>
                 Gratuit ?

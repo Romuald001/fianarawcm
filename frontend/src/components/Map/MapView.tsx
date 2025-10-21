@@ -1,78 +1,85 @@
 import React, { useState } from "react";
-import { MapContainer, Marker, TileLayer, useMapEvents, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
 import L from "leaflet";
-import ToiletForm from "../ToiletForm/ToiletForm";
 import type { Toilet } from "../../types/toilet";
-
+import ToiletForm from "../ToiletForm/ToiletForm";
 import "leaflet/dist/leaflet.css";
+import "./MapView.scss";
 
-// Import correct des icônes
-import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
-import iconUrl from "leaflet/dist/images/marker-icon.png";
-import shadowUrl from "leaflet/dist/images/marker-shadow.png";
-
-
-// Correction icone Leaflet par defaut
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-    iconRetinaUrl,
-    iconUrl,
-    shadowUrl,
+// Icône personnalisée pour les marqueurs
+const toiletIcon = new L.Icon({
+  iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
+  iconSize: [25, 25],
+  iconAnchor: [16, 32],
+  popupAnchor: [0, -30],
 });
 
-
 interface MapViewProps {
-    toilets: Toilet[];
-    onNewToilet?: (t: Toilet) => void;
-};
+  toilets: Toilet[];
+  onNewToilet: (t: Toilet) => void;
+}
 
 const MapView: React.FC<MapViewProps> = ({ toilets, onNewToilet }) => {
-    const [clickedPos, setClickedPos] = useState<{ lat: number; lng: number } | null>(null);
+  const [selectedPos, setSelectedPos] = useState<{ lat: number; lng: number } | null>(null);
 
-    const MapClickHandler = () => {
-        useMapEvents({
-            click(e) {
-                setClickedPos(e.latlng);
-            },
-        });
-        return null;
-    };
+  // Gestion des clics sur la carte
+  const MapClickHandler = () => {
+    useMapEvents({
+      click(e) {
+        setSelectedPos(e.latlng);
+      },
+    });
+    return null;
+  };
 
-    return (
-        <MapContainer>
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
-            <MapClickHandler/>
+  return (
+    <MapContainer center={[-21.4527, 47.0857]} zoom={14} className="leaflet-container">
+      <TileLayer
+        attribution='&copy; OpenStreetMap'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
 
-            {clickedPos && (
-                <Marker position={clickedPos}>
-                    <Popup>
-                        <ToiletForm 
-                        lat={clickedPos.lat}
-                        lng={clickedPos.lng}
-                        onSuccess={(t) => {
-                            if (onNewToilet) onNewToilet(t);
-                            setClickedPos(null);
-                        }}
-                        onClose={() => setClickedPos(null)}
-                        />
-                    </Popup>
-                </Marker>
-            )}
+      <MapClickHandler />
 
-            {toilets.map((t) => (
-                <Marker key={t.id} position={{ lat: t.lat, lng: t.lng }}>
-                <Popup>
-                    <strong>{t.name}</strong>
-                    <p>{t.description}</p>
-                    <p>Propreté : {t.cleanliness}</p>
-                    <p>{t.isFree ? "Gratuit" : "Payant"}</p>
-                </Popup>
-            </Marker>
+      {/* Affichage des toilettes existantes */}
+     {toilets
+        .filter((t) => t.status === "approved")
+        .map((t) => (
+          <Marker key={t.id} position={[t.lat, t.lng]} icon={toiletIcon}>
+            <Popup className="toilet-popup">
+              <div className="popup-content">
+                <h4>{t.name}</h4>
+                <p className="desc">{t.description}</p>
+
+                <div className="details">
+                  <p><strong>💰 Tarification :</strong> {t.isFree ? "Gratuit" : "Payant"}</p>
+                  <p><strong>♿ Accessibilité :</strong> {t.isAccessible ? "Accessible PMR" : "Non accessible"}</p>
+                  <p><strong>🧼 Propreté :</strong> 
+                    <span className={`clean ${t.cleanliness}`}>{t.cleanliness}</span>
+                  </p>
+                  <p><strong>✅ Statut :</strong> {t.status}</p>
+                </div>
+              </div>
+            </Popup>
+          </Marker>
         ))}
-            
 
-        </MapContainer>
-    );
+      {/* Si on clique, on affiche le formulaire */}
+      {selectedPos && (
+        <Popup position={selectedPos}>
+          <ToiletForm
+            lat={selectedPos.lat}
+            lng={selectedPos.lng}
+            onSuccess={(newToilet) => {
+              onNewToilet(newToilet);
+              setSelectedPos(null);
+            }}
+            onClose={() => setSelectedPos(null)}
+          />
+        </Popup>
+      )}
+    </MapContainer>
+  );
 };
 
 export default MapView;
