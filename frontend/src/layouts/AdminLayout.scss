@@ -3,31 +3,46 @@
 .admin-layout {
   display: flex;
   height: 100vh;
-  font-family: 'Inter', sans-serif;
+  background: #f5f7fa;
+  color: #333;
+  transition: all 0.3s ease;
 
-  /* =========================
-     Sidebar
-  ========================== */
   .sidebar {
-    width: 250px;
-    background: #1f1f38;
+    background: linear-gradient(135deg, #1e293b, #334155);
     color: #fff;
+    min-width: 250px;
+    max-width: 250px;
+    height: 100vh;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 1rem;
-    transition: width 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
 
-    &.open {
-      width: 250px;
+    &.closed {
+      min-width: 80px;
+      max-width: 80px;
+      align-items: center;
+      text-align: center;
+
+      .logo {
+        font-size: 1.3rem;
+        text-align: center;
+      }
+
+      nav a span,
+      .logout-btn span {
+        display: none;
+      }
     }
 
     .logo {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       font-weight: 700;
-      margin-bottom: 2rem;
       text-align: center;
+      margin-bottom: 2rem;
+      letter-spacing: 1px;
     }
 
     nav {
@@ -36,73 +51,89 @@
       gap: 1rem;
 
       a {
-        padding: 0.5rem 1rem;
-        border-radius: 8px;
-        color: #fff;
-        transition: all 0.2s;
-        &:hover {
-          background: #2b2d42;
-          transform: translateX(3px);
-        }
-        &.active {
-          background: #007bff;
-        }
-      }
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        padding: 0.8rem 1rem;
+        color: #cbd5e1;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: background 0.3s, color 0.3s;
 
-      .logout-btn {
-        margin-top: 2rem;
-        background: #c0392b;
-        color: #fff;
-        border: none;
-        padding: 0.5rem 1rem;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.2s;
         &:hover {
-          background: #e74c3c;
+          background: rgba(255, 255, 255, 0.1);
+          color: #fff;
+          transform: translateX(4px);
+        }
+
+        &.active {
+          background: rgba(255, 255, 255, 0.2);
+          color: #fff;
+        }
+
+        svg {
+          font-size: 1.2rem;
         }
       }
     }
 
-    .toggle-btn {
-      margin-top: 2rem;
-      padding: 0.5rem;
+    .logout-btn {
+      background: rgba(255, 255, 255, 0.1);
       border: none;
-      background: #2b2d42;
-      color: #fff;
-      border-radius: 50%;
-      cursor: pointer;
-      align-self: center;
+      color: #fca5a5;
       font-size: 1rem;
-      transition: all 0.3s;
+      border-radius: 10px;
+      padding: 0.8rem 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      transition: background 0.3s, transform 0.2s;
+
       &:hover {
-        background: #007bff;
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
       }
     }
   }
 
-  /* =========================
-     Main Content
-  ========================== */
   .main-content {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background: #f9fbff;
+    transition: margin-left 0.3s ease;
 
-    header.topbar {
-      padding: 1rem 2rem;
-      background: #fff;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    .topbar {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-start;
+      padding: 1rem 2rem;
+      background: #fff;
+      border-bottom: 1px solid #e2e8f0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+
+      .toggle-btn {
+        background: transparent;
+        border: none;
+        font-size: 1.5rem;
+        margin-right: 1rem;
+        color: #334155;
+        cursor: pointer;
+        transition: transform 0.2s, color 0.3s;
+
+        &:hover {
+          transform: scale(1.1);
+          color: #0ea5e9;
+        }
+      }
 
       h3 {
-        font-family: 'Poppins', sans-serif;
+        font-size: 1.3rem;
         font-weight: 600;
-        color: #1f1f38;
-        margin: 0;
       }
     }
 
@@ -110,56 +141,17 @@
       flex: 1;
       padding: 2rem;
       overflow-y: auto;
+      background: #f9fafb;
     }
 
     footer {
       text-align: center;
-      padding: 1rem 0;
-      background: #1f1f38;
-      color: #fff;
-      font-size: 0.85rem;
+      padding: 1rem;
+      background: #fff;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.9rem;
+      color: #64748b;
     }
   }
 }
 
-/* =========================
-   Responsive
-========================= */
-@media (max-width: 768px) {
-  .admin-layout {
-    flex-direction: column;
-
-    .sidebar {
-      width: 100%;
-      flex-direction: row;
-      justify-content: space-between;
-      padding: 0.5rem 1rem;
-
-      nav {
-        flex-direction: row;
-        gap: 0.5rem;
-        a {
-          padding: 0.3rem 0.5rem;
-          font-size: 0.85rem;
-        }
-        .logout-btn {
-          margin-top: 0;
-        }
-      }
-
-      .toggle-btn {
-        display: none;
-      }
-    }
-
-    .main-content {
-      flex: 1;
-      header.topbar {
-        padding: 0.5rem 1rem;
-      }
-      main {
-        padding: 1rem;
-      }
-    }
-  }
-}

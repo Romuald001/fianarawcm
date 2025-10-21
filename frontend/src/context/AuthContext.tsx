@@ -11,7 +11,8 @@ import http from '../services/http';
 interface AuthContextType {
     user: User | null;                      
     token: string | null;
-    role: string | null;                   
+    role: string | null;  
+    loading: boolean;                 
     loginWithEmail: (email: string, password: string) => Promise<void>;
     registerWithEmail: (username: string, email: string, password: string) => Promise<void>;
     logout: () => void;
@@ -25,6 +26,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [token, setToken]= useState<string | null>(null);
     const [user, setUser] = useState<User | null>(null);
     const [role, setRole] = useState<string | null>(null);
+    const [loading, setLoading] = useState(true);
 
    // verifier le token dans localstorage au demarrage
     useEffect(() => {
@@ -41,12 +43,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 });
                 setToken(storedToken);
                 setRole(decoded.role);
-                http.defaults.headers.common.Authorization = `Bearer $(storedToken)`;
+                http.defaults.headers.common.Authorization = `Bearer ${storedToken}`;
             } catch (error) {
                 console.error("token invalide : ", error);
                 localStorage.removeItem("token");
             }
         }
+        setLoading(false);
     }, []);
     
     // fonction login
@@ -82,7 +85,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 
     return (
-        <AuthContext.Provider value={{ user, token, role, loginWithEmail, registerWithEmail, logout}}>
+        <AuthContext.Provider value={{ user, token, role, loading, loginWithEmail, registerWithEmail, logout}}>
             {children}
         </AuthContext.Provider>
     );
