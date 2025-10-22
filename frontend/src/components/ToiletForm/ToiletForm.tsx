@@ -86,7 +86,7 @@ const ToiletForm: React.FC<ToiletFormProps> = ({ lat, lng, onSuccess, onClose })
                 Latitude
                 <input
                     type="number"
-                    step="0.000001"
+                    step="0.00000001"
                     value={latitude}
                     onChange={(e) => setLatitude(parseFloat(e.target.value))}
                     required
@@ -97,7 +97,7 @@ const ToiletForm: React.FC<ToiletFormProps> = ({ lat, lng, onSuccess, onClose })
                 Longitude
                 <input
                     type="number"
-                    step="0.000001"
+                    step="0.00000001"
                     value={longitude}
                     onChange={(e) => setLongitude(parseFloat(e.target.value))}
                     required

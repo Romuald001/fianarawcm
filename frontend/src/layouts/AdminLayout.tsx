@@ -29,9 +29,9 @@ const AdminLayout: React.FC = () => {
             {isSidebarOpen && <span>Toilettes en attente</span>}
           </NavLink>
 
-          <NavLink to="/admin/types" className={({ isActive }) => isActive ? "active" : ""}>
+          <NavLink to="/admin/approved" className={({ isActive }) => isActive ? "active" : ""}>
             <FaList />
-            {isSidebarOpen && <span>Types approuvé </span>}
+            {isSidebarOpen && <span>Toilettes approuvé </span>}
           </NavLink>
         </nav>
 

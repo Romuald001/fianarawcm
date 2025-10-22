@@ -16,11 +16,11 @@ const Toilet = sequelize.define('Toilet', {
         allowNull: true
     },
     lat: {
-        type: DataTypes.DECIMAL(9,6),
+        type: DataTypes.DECIMAL(10,8),
         allowNull: false
     },
     lng: {
-        type: DataTypes.DECIMAL(9,6),
+        type: DataTypes.DECIMAL(11,8),
         allowNull: false
     },
     isFree: {

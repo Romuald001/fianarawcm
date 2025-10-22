@@ -45,7 +45,8 @@ const MapView: React.FC<MapViewProps> = ({ toilets, onNewToilet }) => {
      {toilets
         .filter((t) => t.status === "approved")
         .map((t) => (
-          <Marker key={t.id} position={[t.lat, t.lng]} icon={toiletIcon}>
+          <Marker key={t.id} position={[parseFloat(t.lat as any), parseFloat(t.lng as any)]} icon={toiletIcon}>
+
             <Popup className="toilet-popup">
               <div className="popup-content">
                 <h4>{t.name}</h4>

@@ -15,8 +15,9 @@ import Home from "../pages/users/Home";
 import AddToilet from "../pages/users/AddToilet";
 
 import AdminLayout from "../layouts/AdminLayout";
-import Dashboard from "../pages/admin/dashboard";
+import Dashboard from "../pages/admin/Dashboard";
 import PendingList from "../pages/admin/PendingList";
+import ApprovedList from "../pages/admin/ApprovedList";
 
 
 const ProtectedRoute: React.FC<{ requiredRole: "user" | "admin" }> = ({ requiredRole }) => {
@@ -62,6 +63,7 @@ const AppRoutes: React.FC = () => {
           <Route element={<AdminLayout />}>
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/pending" element={<PendingList />} />
+            <Route path="/admin/approved" element={<ApprovedList />} />
           </Route>
         </Route>
         

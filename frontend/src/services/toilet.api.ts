@@ -33,4 +33,10 @@ export const toilet = {
         return res.data;
     },
 
+    delete: async (id: number) => {
+        // DELETE /api/toilets/:id/deleted: passe en "deleted"
+        const res = await http.delete(`/toilets/${id}`);
+        return res.data;
+    }
+    
 };

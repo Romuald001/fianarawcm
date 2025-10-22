@@ -1,4 +1,4 @@
-.pending-list-page {
+.approved-list-page {
   padding: 2rem;
 
   h2 {
@@ -34,7 +34,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   }
 
-  .pending-table {
+  .approved-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.95rem;
@@ -79,17 +79,7 @@
             font-weight: 500;
             transition: background 0.2s, transform 0.1s;
 
-            &.approve {
-              background: #28a745;
-              color: white;
-
-              &:hover {
-                background: #218838;
-                transform: scale(1.05);
-              }
-            }
-
-            &.reject {
+            &.delete {
               background: #dc3545;
               color: white;
 
