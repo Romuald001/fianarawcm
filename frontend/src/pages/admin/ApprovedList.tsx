@@ -6,6 +6,7 @@ import "./ApprovedList.scss";
 const ApprovedList: React.FC = () => {
   const [approved, setApproved] = useState<Toilet[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [toilets, setToilets] = useState<Toilet[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   const fetchApproved = async () => {
@@ -24,16 +25,16 @@ const ApprovedList: React.FC = () => {
     }
   };
 
-  const handleDelete = async (id: number) => {
-    if (!window.confirm("Voulez-vous vraiment supprimer cette toilette ?")) return;
-    try {
-      await toilet.delete(id); // Assure-toi que le backend a bien la route DELETE /toilets/:id
-      setApproved((prev) => prev.filter((t) => t.id !== id));
-    } catch (err) {
-      console.error(err);
-      alert("Erreur lors de la suppression");
-    }
-  };
+const deleteToilet = async (id: number) => {
+  if (!window.confirm("Voulez-vous vraiment supprimer cette toilette ?")) return;
+  try {
+    await toilet.deleteApproved(id);
+    setToilets(toilets.filter((t) => t.id !== id));
+    alert("Toilette supprimée avec succès !");
+  } catch (e: any) {
+    alert(e.response?.data?.error || e.message);
+  }
+};
 
   useEffect(() => {
     fetchApproved();
@@ -79,7 +80,7 @@ const ApprovedList: React.FC = () => {
                   <td>{t.createdBy || "Inconnu"}</td>
                   <td>{t.createdAt ? new Date(t.createdAt).toLocaleString() : "—"}</td>
                   <td className="action-buttons">
-                    <button className="delete" onClick={() => handleDelete(t.id!)}>
+                    <button className="delete" onClick={() => deleteToilet(t.id!)}>
                       🗑 Supprimer
                     </button>
                   </td>

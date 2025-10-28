@@ -1,20 +1,13 @@
 .home-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem 1rem;
-  //background: linear-gradient(135deg, #e8f0ff, #f9fbff);
-  color: #2b2d42;
+  font-family: "Poppins", sans-serif;
+  color: #333;
 
   .hero {
-    width: 100%;
-    background: linear-gradient(135deg, #4e54c8, #8f94fb);
+    background: linear-gradient(135deg, #2196f3, #1976d2);
     color: white;
-    border-radius: 1rem;
-    padding: 3rem 2rem;
     text-align: center;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 4rem 2rem;
+    border-radius: 0 0 50% 50% / 10%;
 
     .hero-text {
       max-width: 800px;
@@ -23,74 +16,65 @@
       h1 {
         font-size: 2.2rem;
         margin-bottom: 1rem;
-        font-weight: 700;
       }
 
       p {
         font-size: 1.1rem;
         line-height: 1.6;
-        margin-bottom: 1.5rem;
+        opacity: 0.95;
       }
+
       .add-btn {
-        background-color: white;
-        color: #007bff;
-        font-weight: 600;
+        margin-top: 1.5rem;
+        background: #fff;
+        color: #1976d2;
         border: none;
-        border-radius: 50px;
-        padding: 0.8rem 1.8rem;
-        font-size: 1rem;
+        border-radius: 8px;
+        padding: 12px 20px;
+        font-weight: 600;
         cursor: pointer;
-        transition: all 0.3s ease-in-out;
-        box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+        transition: 0.3s;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 
         &:hover {
-          background-color: #0056d6;
-          color: white;
-          transform: scale(1.05);
-          box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+          background: #1565c0;
+          color: #fff;
         }
       }
     }
   }
 
   .info-card {
-    width: 100%;
-    background: linear-gradient(135deg, #4e54c8, #8f94fb);
-    color: white;
-    border-radius: 1rem;
-    padding: 3rem 2rem;
+    background: #fff;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    max-width: 900px;
     text-align: center;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 
     h2 {
-      margin-bottom: 1rem;
+      color: #1976d2;
+      margin-bottom: 0.8rem;
     }
 
     p {
-        font-size: 1.1rem;
-        line-height: 1.6;
-        margin-bottom: 1.5rem;
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.6;
     }
   }
 
   .map-title {
-    font-size: 1.5rem;
-    margin: 1rem 0;
-    color: #2b2d42;
-  }
-
-  .leaflet-container {
-    width: 100%;
-    height: 75vh;
-    border-radius: 0.8rem;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-    z-index: 1;
+    text-align: center;
+    margin-top: 3rem;
+    font-weight: 600;
+    color: #1565c0;
   }
 
   .error {
     color: red;
-    margin: 1rem 0;
-    font-weight: 500;
+    text-align: center;
+    margin-top: 1rem;
   }
 }

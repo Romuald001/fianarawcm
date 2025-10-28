@@ -69,3 +69,20 @@ exports.reject = async (req, res) => {
     }
 };
 
+// Admin/mod: supprimer
+exports.deleteapproved = async (req, res) => {
+    try {
+        const t = await Toilet.findByPk(req.params.id);
+        if (!t) return res.status(404).json({ error: 'not found'});
+
+        if (t.status !== 'approved') {
+            return res.status(400).json({ error: 'Only approved toilets can be deleted'});
+        }
+
+        await t.destroy();
+        res.json({ message: 'Toilet deleted succcessfully' });
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+};
+

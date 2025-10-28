@@ -56,6 +56,14 @@ const Home: React.FC = () => {
                 </div>
             </section>
 
+
+
+            <h2 className="map-title">🗺️ Carte des toilettes</h2>
+            {loading && <p>Chargement des toilettes...</p>}
+            {error && <p className="error">{error}</p>}
+            <MapView toilets={toilets} onNewToilet={handleNewToilet} />
+
+
             <section className="info-card">
                 <h2>🌍 Notre mission</h2>
                 <p>
@@ -64,11 +72,6 @@ const Home: React.FC = () => {
                     construisons un environnement plus sain et solidaire.
                 </p>
             </section>
-
-            <h2 className="map-title">🗺️ Carte des toilettes</h2>
-            {loading && <p>Chargement des toilettes...</p>}
-            {error && <p className="error">{error}</p>}
-            <MapView toilets={toilets} onNewToilet={handleNewToilet} />
         </div>
     );
 };

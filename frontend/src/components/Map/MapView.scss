@@ -1,84 +1,57 @@
-.leaflet-container {
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
-    z-index: 0;
+.map-wrapper {
+  position: relative;
 }
-/* === Popup personnalisé === */
-.toilet-popup {
-  .leaflet-popup-content-wrapper {
-    background: #ffffff;
-    border-radius: 14px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-    padding: 0;
-  }
 
-  .leaflet-popup-content {
-    margin: 0;
-    padding: 1rem 1.2rem;
-    font-family: "Inter", sans-serif;
-    color: #333;
-  }
+.leaflet-container {
+  height: 80vh;
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Popup des toilettes */
+.toilet-popup {
+  font-family: "Poppins", sans-serif;
+  color: #333;
 
   .popup-content {
     h4 {
-      margin: 0 0 0.5rem 0;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #007bff;
-      text-align: center;
+      color: #1976d2;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
     }
 
     .desc {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #555;
-      text-align: justify;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.5rem;
     }
 
     .details {
-      background: #f7faff;
-      border-radius: 10px;
-      padding: 0.6rem 0.8rem;
-      font-size: 0.85rem;
-      color: #444;
+      font-size: 0.8rem;
       line-height: 1.4;
 
-      p {
-        margin: 0.3rem 0;
-        display: flex;
-        align-items: center;
-        gap: 0.3rem;
-
-        strong {
-          color: #222;
-          font-weight: 600;
-        }
+      strong {
+        color: #444;
       }
 
       .clean {
         font-weight: 600;
-        text-transform: capitalize;
-        padding: 2px 6px;
-        border-radius: 6px;
 
-        &.good {
-          background: #d4edda;
-          color: #155724;
+        &.clean {
+          color: #2e7d32;
         }
-        &.average {
-          background: #fff3cd;
-          color: #856404;
+
+        &.medium {
+          color: #f9a825;
         }
-        &.bad {
-          background: #f8d7da;
-          color: #721c24;
+
+        &.dirty {
+          color: #c62828;
         }
       }
     }
-  }
-
-  .leaflet-popup-tip {
-    background: #fff;
   }
 }

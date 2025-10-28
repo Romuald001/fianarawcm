@@ -1,0 +1,101 @@
+.floating-sidebar {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 260px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  padding: 1.2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  font-family: "Poppins", sans-serif;
+  transition: all 0.3s ease;
+
+  h3 {
+    font-size: 1.1rem;
+    color: #1565c0;
+    margin-bottom: 0.2rem;
+  }
+
+  p {
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+  }
+
+  .sidebar-search {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+
+    &:focus {
+      border-color: #1976d2;
+      box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+    }
+  }
+
+  .sidebar-btn {
+    background: #1976d2;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 0;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background: #1565c0;
+      transform: scale(1.02);
+    }
+  }
+}
+
+.suggestion-list {
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+  border-radius: 8px;
+  margin-top: 4px;
+  padding: 0;
+  list-style: none;
+  z-index: 9999;
+}
+
+.suggestion-list li {
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.suggestion-list li:hover {
+  background: #f0f0f0;
+}
+
+.sidebar-search-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+
+/* Responsive : cacher la sidebar sur mobile */
+@media (max-width: 768px) {
+  .floating-sidebar {
+    width: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 10px;
+    padding: 1rem;
+  }
+}
