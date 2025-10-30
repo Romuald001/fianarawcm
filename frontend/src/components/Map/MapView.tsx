@@ -3,6 +3,8 @@ import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from "re
 import L from "leaflet";
 import type { Toilet } from "../../types/toilet";
 import ToiletForm from "../ToiletForm/ToiletForm";
+import { findNearest } from "../../utils/geo";
+
 import "leaflet/dist/leaflet.css";
 import "./MapView.scss";
 import "./FloatingSidebar.scss";
@@ -159,6 +161,40 @@ const MapView: React.FC<MapViewProps> = ({ toilets, onNewToilet }) => {
     }
     }, [userPos]);
 
+  // ✅ Fonction pour trouver la toilette la plus proche avec l’algorithme Haversine
+const handleFindNearest = () => {
+  if (!userPos) {
+    alert("Veuillez activer la géolocalisation d'abord.");
+    return;
+  }
+
+  const approvedToilets = toilets.filter((t) => t.status === "approved");
+  if (approvedToilets.length === 0) {
+    alert("Aucune toilette approuvée trouvée !");
+    return;
+  }
+
+  const [nearest] = findNearest(
+    approvedToilets,
+    userPos.lat,
+    userPos.lng,
+    1 // on ne veut que la plus proche
+  );
+
+  if (nearest) {
+    mapRef.current?.flyTo([nearest.lat, nearest.lng], 17, { duration: 2 });
+    L.popup()
+      .setLatLng([nearest.lat, nearest.lng])
+      .setContent(
+        `<b>🧭 Toilette la plus proche :</b><br>${nearest.name}<br><i>${nearest.description}</i><br><br>Distance approximative : ${(
+          nearest.distance! / 1000
+        ).toFixed(2)} km`
+      )
+      .openOn(mapRef.current!);
+  }
+};
+  
+
   return (
     <MapContainer center={[-21.4527, 47.0857]} zoom={14} className="leaflet-container">
       <SetMapRef />
@@ -243,6 +279,14 @@ const MapView: React.FC<MapViewProps> = ({ toilets, onNewToilet }) => {
         <button className="sidebar-btn locate-btn" onClick={locateUser}>
           📍 Localiser
         </button>
+
+        <button
+          className="sidebar-btn nearest-btn"
+          onClick={() => handleFindNearest()}
+        >
+          🚀 Toilette la plus proche
+        </button>
+
       </div>
 
       {/* ✅ Formulaire d’ajout */}

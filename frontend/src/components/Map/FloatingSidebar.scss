@@ -88,6 +88,19 @@
   width: 100%;
 }
 
+.nearest-btn {
+  background-color: #3b82f6; // bleu moderne
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.nearest-btn:hover {
+  background-color: #2563eb;
+  transform: scale(1.03);
+}
+
+
 
 /* Responsive : cacher la sidebar sur mobile */
 @media (max-width: 768px) {
