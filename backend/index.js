@@ -27,7 +27,7 @@ app.use('/api/toilets', toiletRoutes);
 
         // 3) Lancement serveur
         const PORT = process.env.PORT || 5000;
-        app.listen(PORT, () => console.log(`🚀 Serveur lancé sur http://localhost:${PORT}`));
+        app.listen(PORT,  () => console.log(`🚀 Serveur lancé sur http://localhost:${PORT}`));
     } catch (err) {
         console.error('❌ Échec connexion/sync MySQL:', err.message);
         process.exit(1);

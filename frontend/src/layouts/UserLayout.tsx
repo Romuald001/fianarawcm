@@ -25,7 +25,7 @@ const UserLayout = () => {
                         Ajouter une toilette
                     </NavLink>
                 
-                    <NavLink to="/cotributions" className={({ isActive}) => isActive ? "active" : ""}>
+                    <NavLink to="/cotribution" className={({ isActive}) => isActive ? "active" : ""}>
                         Mes contributions
                     </NavLink>
 

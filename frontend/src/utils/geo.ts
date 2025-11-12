@@ -5,7 +5,7 @@ const toRad = (deg: number) => (deg * Math.PI) / 180; // degres -> radians
 const R = 63711000;     // rayon moyen de la terre (m)
 
 export function haversineDistance(lat1: number, lng1: number, lat2: number, lng2: number) {
-    //  formule de haversine pour la distsnce "grande cercle"
+    //  formule de haversine pour la distance "grande cercle"
     const dLat = toRad(lat2 - lat1);    
     const dLon = toRad(lng2 - lng1);
     const a =

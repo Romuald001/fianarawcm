@@ -13,11 +13,13 @@ import Register from "../pages/auth/Register";
 import UserLayout from "../layouts/UserLayout";
 import Home from "../pages/users/Home";
 import AddToilet from "../pages/users/AddToilet";
+import Contribution from "../pages/users/Contribution";
 
 import AdminLayout from "../layouts/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
 import PendingList from "../pages/admin/PendingList";
 import ApprovedList from "../pages/admin/ApprovedList";
+
 
 
 const ProtectedRoute: React.FC<{ requiredRole: "user" | "admin" }> = ({ requiredRole }) => {
@@ -53,8 +55,9 @@ const AppRoutes: React.FC = () => {
         {/* Routes utilisateur */}
         <Route element={<ProtectedRoute requiredRole="user" />}>
           <Route element={<UserLayout />}>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home />}/>
             <Route path="/add" element={<AddToilet />}/>
+            <Route path="/cotribution" element={<Contribution />}/>
           </Route>
         </Route>
 
