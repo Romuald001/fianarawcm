@@ -15,7 +15,7 @@ const UserLayout = () => {
     return (
         <div className="user-layout">
             <header className="navbar">
-                <h2 className="logo"> Toilet Finder </h2>
+                <h2 className="logo">Toilet Finder</h2>
                 <nav>
                     <NavLink to="/map" className={({ isActive }) => isActive ? "active" : ""}>
                         Carte
@@ -24,8 +24,8 @@ const UserLayout = () => {
                     <NavLink to="/add" className={({ isActive }) => isActive ? "active" : ""}>
                         Ajouter une toilette
                     </NavLink>
-                
-                    <NavLink to="/cotribution" className={({ isActive}) => isActive ? "active" : ""}>
+
+                    <NavLink to="/cotribution" className={({ isActive }) => isActive ? "active" : ""}>
                         Mes contributions
                     </NavLink>
 
@@ -38,7 +38,31 @@ const UserLayout = () => {
             </main>
 
             <footer className="footer">
-                <p>© {new Date().getFullYear()} Toilet Finder — Tous droits réservés</p>
+                <div className="footer-grid">
+                    <div className="footer-brand">
+                        <p className="footer-logo">Toilet Finder</p>
+                        <p>
+                            Trouvez et partagez les toilettes publiques de Fianarantsoa.
+                            Un projet communautaire pour une ville plus propre et accessible.
+                        </p>
+                    </div>
+
+                    <div className="footer-links">
+                        <div>
+                            <h4>Navigation</h4>
+                            <ul>
+                                <li><NavLink to="/map">Carte</NavLink></li>
+                                <li><NavLink to="/add">Ajouter une toilette</NavLink></li>
+                                <li><NavLink to="/cotribution">Mes contributions</NavLink></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="footer-bottom">
+                    <p>© {new Date().getFullYear()} Toilet Finder — Tous droits réservés</p>
+                    <p>Fait à Fianarantsoa 🇲🇬</p>
+                </div>
             </footer>
         </div>
     );

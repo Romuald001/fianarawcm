@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import type { Toilet } from "../../types/toilet";
 import { toilet } from "../../services/toilet.api";
 import MapView from "../../components/Map/MapView";
-import "./home.scss";
+import "./Home.scss";
 import { useNavigate } from "react-router-dom";
 
 const Home: React.FC = () => {
- 
+
     // États
     const [toilets, setToilets] = useState<Toilet[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -20,9 +20,10 @@ const Home: React.FC = () => {
         try {
             const data = await toilet.getApproved();
             setToilets(data);
-        } catch (err: any) {
+        } catch (err) {
             console.error(err);
-            setError(err?.response?.data?.message || "Erreur lors du chargement des toilettes");
+            const apiError = err as { response?: { data?: { message?: string } } };
+            setError(apiError?.response?.data?.message || "Erreur lors du chargement des toilettes");
         } finally {
             setLoading(false);
         }
@@ -42,6 +43,7 @@ const Home: React.FC = () => {
         <div className="home-page">
             <section className="hero">
                 <div className="hero-text">
+                    <span className="hero-eyebrow">Fianarantsoa</span>
                     <h1>Bienvenue sur Toilet Finder 🚻</h1>
                     <p>
                         Trouvez facilement les toilettes publiques les plus proches de vous à Fianarantsoa.
@@ -56,13 +58,10 @@ const Home: React.FC = () => {
                 </div>
             </section>
 
-
-
             <h2 className="map-title">🗺️ Carte des toilettes</h2>
-            {loading && <p>Chargement des toilettes...</p>}
+            {loading && <p className="status-text">Chargement des toilettes...</p>}
             {error && <p className="error">{error}</p>}
             <MapView toilets={toilets} onNewToilet={handleNewToilet} />
-
 
             <section className="info-card">
                 <h2>🌍 Notre mission</h2>

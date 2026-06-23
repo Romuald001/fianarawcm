@@ -1,3 +1,6 @@
+/* src/components/Map/MapView.scss */
+@use "../../styles/theme" as *;
+
 .map-wrapper {
   position: relative;
 }
@@ -5,36 +8,42 @@
 .leaflet-container {
   height: 80vh;
   width: 100%;
-  border-radius: 20px;
+  border-radius: $radius-card;
   overflow: hidden;
   margin-top: 1rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: $shadow-card;
+  border: 1px solid $map-border;
 }
 
-/* Popup des toilettes */
+/* -------------------------------------------------------------- */
+/* Popup des toilettes : même langage de carte que le reste de    */
+/* l'app (typo, couleurs), le code couleur propreté reste lisible */
+/* -------------------------------------------------------------- */
 .toilet-popup {
-  font-family: "Poppins", sans-serif;
-  color: #333;
+  font-family: $font-body;
+  color: $map-ink;
 
   .popup-content {
     h4 {
-      color: #1976d2;
+      font-family: $font-display;
+      color: $map-route-dark;
       font-size: 1rem;
+      font-weight: 600;
       margin-bottom: 0.5rem;
     }
 
     .desc {
       font-size: 0.85rem;
-      color: #555;
+      color: $map-ink-soft;
       margin-bottom: 0.5rem;
     }
 
     .details {
       font-size: 0.8rem;
-      line-height: 1.4;
+      line-height: 1.45;
 
       strong {
-        color: #444;
+        color: $map-ink;
       }
 
       .clean {
@@ -45,11 +54,11 @@
         }
 
         &.medium {
-          color: #f9a825;
+          color: #b8860b;
         }
 
         &.dirty {
-          color: #c62828;
+          color: $map-error;
         }
       }
     }

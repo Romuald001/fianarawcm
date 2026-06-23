@@ -5,6 +5,7 @@ const AddToilet = () => {
     return (
         <div className="add-toilet-page">
             <div className="hero">
+                <span className="hero-pin" aria-hidden="true" />
                 <h1>Ajouter une toilette 🚻</h1>
                 <p>Partagez les toilettes publiques de votre ville pour aider la communauté.</p>
             </div>

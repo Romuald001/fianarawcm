@@ -69,7 +69,7 @@ const AppRoutes: React.FC = () => {
             <Route path="/admin/approved" element={<ApprovedList />} />
           </Route>
         </Route>
-        
+       
 
         {/* Fallback : redirige selon le rôle ou login */}
         <Route

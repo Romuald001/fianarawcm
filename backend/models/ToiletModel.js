@@ -45,7 +45,7 @@ const Toilet = sequelize.define('Toilet', {
         references: { model: 'users', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
-    }
+    },
     
 }, {
     tableName: 'toilets',

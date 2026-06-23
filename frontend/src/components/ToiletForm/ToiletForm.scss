@@ -1,42 +1,54 @@
+/* src/components/ToiletForm/ToiletForm.scss */
+@use "sass:color";
+@use "../../styles/theme" as *;
+
 .toilet-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.8rem;
-  width: 230px; /* ✅ largeur adaptée au popup */
+  padding: 0.85rem;
+  width: 230px; /* largeur adaptée au popup */
   max-height: 500px; /* limite la hauteur */
   overflow-y: auto; /* scroll si trop de contenu */
-  background: #fff;
-  border-radius: 10px;
+  background: $map-paper;
+  border-radius: $radius-card;
+  font-family: $font-body;
+  color: $map-ink;
 
   h3 {
     margin-top: 0;
-    font-size: 1rem;
-    color: #333;
+    font-family: $font-display;
+    font-weight: 600;
+    font-size: 0.98rem;
+    color: $map-ink;
     text-align: center;
   }
 
   label {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     display: flex;
     flex-direction: column;
-    font-weight: 500;
-    color: #444;
+    gap: 2px;
+    font-weight: 600;
+    color: $map-ink-soft;
 
     input,
     textarea,
     select {
       margin-top: 0.2rem;
       padding: 0.35rem 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      border: 1px solid $map-border;
+      border-radius: $radius-input;
+      background: #ffffff;
+      color: $map-ink;
+      font-family: $font-body;
       font-size: 0.85rem;
       resize: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
 
       &:focus {
-        border-color: #007bff;
-        outline: none;
+        @include focus-ring($map-route);
       }
     }
 
@@ -53,46 +65,48 @@
   .coord-inputs {
     display: flex;
     flex-direction: column;
-    grid-template-columns: 1fr 1fr;
     gap: 0.4rem;
   }
 
   .hint {
-    font-size: 0.75rem;
-    color: #666;
-    background: #f8f9fa;
+    font-size: 0.74rem;
+    color: $map-ink-soft;
+    background: $map-paper-soft;
     padding: 0.3rem 0.5rem;
-    border-radius: 6px;
+    border-radius: $radius-input;
     text-align: center;
   }
 
   button {
     margin-top: 0.5rem;
-    background: #007bff;
-    color: white;
+    background: $map-route-dark;
+    color: #ffffff;
     border: none;
-    border-radius: 6px;
-    padding: 0.45rem;
-    font-size: 0.9rem;
+    border-radius: $radius-input;
+    padding: 0.5rem;
+    font-family: $font-display;
+    font-weight: 600;
+    font-size: 0.88rem;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 
-    &:hover {
-      background: #0056b3;
+    &:hover:not(:disabled) {
+      background: color.adjust($map-route-dark, $lightness: -6%);
+      transform: translateY(-1px);
     }
 
     &:disabled {
-      background: #aaa;
+      background: #b9c1c9;
       cursor: not-allowed;
     }
   }
 
   .error {
-    color: #c0392b;
-    background: #f9d6d5;
+    color: $map-error;
+    background: $map-error-bg;
     padding: 0.4rem;
-    border-radius: 5px;
-    font-size: 0.8rem;
+    border-radius: $radius-input;
+    font-size: 0.78rem;
     text-align: center;
   }
 }

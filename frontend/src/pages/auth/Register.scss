@@ -1,48 +1,189 @@
+/* src/pages/auth/Register.scss */
+@use "sass:color";
+@use "./auth-theme" as *;
+
+// Register réutilise exactement les mêmes classes que Login
+// (.auth-page, .auth-form, .error, .auth-footer) afin de garder
+// un seul thème visuel cohérent et facile à maintenir.
+// Si Login.scss est déjà chargé globalement, ce fichier peut même
+// être réduit à de simples surcharges spécifiques à l'inscription.
+
 .auth-page {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  padding: 24px;
+  overflow: hidden;
+  font-family: $font-body;
+  @include map-backdrop;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -10%;
+    background:
+      radial-gradient(circle at 80% 20%, rgba($map-route, 0.18), transparent 40%),
+      radial-gradient(circle at 20% 80%, rgba($map-pin, 0.16), transparent 38%);
+    pointer-events: none;
+  }
 }
 
 .auth-form {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  width: 300px;
+  position: relative;
+  z-index: 1;
+  background-color: $map-paper;
+  padding: 44px 36px 36px;
+  border-radius: $radius-card;
+  box-shadow: $shadow-card;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.25s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &__pin {
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    border-radius: 50% 50% 50% 0;
+    background: linear-gradient(135deg, $map-route, $map-route-dark);
+    transform: translateX(-50%) rotate(-45deg);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+    animation: auth-pin-drop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 14px;
+      height: 14px;
+      background: $map-paper;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
 
   h2 {
     text-align: center;
-    margin-bottom: 1.5rem;
+    color: $map-ink;
+    font-family: $font-display;
+    font-weight: 600;
+    font-size: 1.6rem;
+    letter-spacing: -0.01em;
+    margin: 6px 0 4px;
   }
 
   label {
-    display: block;
-    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-weight: 600;
+    color: $map-ink-soft;
+    font-size: 0.85rem;
 
     input {
-      width: 100%;
-      padding: 0.5rem;
-      margin-top: 0.25rem;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+      padding: 11px 14px;
+      border: 1px solid $map-border;
+      border-radius: $radius-input;
+      background-color: #ffffff;
+      font-size: 1rem;
+      font-family: $font-body;
+      color: $map-ink;
+      outline: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+
+      &::placeholder {
+        color: #b9c1c9;
+      }
+
+      &:focus {
+        @include focus-ring($map-route);
+      }
     }
   }
 
   button {
-    width: 100%;
-    padding: 0.75rem;
-    background: #007bff;
-    color: #fff;
+    margin-top: 6px;
+    padding: 13px;
     border: none;
-    border-radius: 5px;
+    border-radius: $radius-input;
+    background-color: $map-route-dark;
+    color: #ffffff;
+    font-family: $font-display;
+    font-weight: 600;
+    letter-spacing: 0.01em;
     cursor: pointer;
+    transition: background-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+
+    &:hover:not(:disabled) {
+      background-color: color.adjust($map-route-dark, $lightness: -6%);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px -6px rgba($map-route-dark, 0.55);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    &:disabled {
+      background-color: #a9c6c2;
+      cursor: not-allowed;
+    }
   }
 
   .error {
-    color: red;
-    margin-bottom: 1rem;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: $map-error-bg;
+    color: $map-error;
+    border: 1px solid rgba($map-error, 0.25);
+    padding: 9px 12px;
+    border-radius: $radius-input;
+    font-size: 0.88rem;
+    text-align: left;
+    margin: 0;
+
+    &::before {
+      content: "!";
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: $map-error;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+  }
+}
+
+@keyframes auth-pin-drop {
+  0%   { transform: translateY(-18px) translateX(-50%) rotate(-45deg) scale(0.6); opacity: 0; }
+  60%  { transform: translateY(2px) translateX(-50%) rotate(-45deg) scale(1.05); opacity: 1; }
+  100% { transform: translateY(0) translateX(-50%) rotate(-45deg) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-form__pin { animation: none; }
+}
+
+@media (max-width: 420px) {
+  .auth-form {
+    padding: 38px 22px 28px;
   }
 }

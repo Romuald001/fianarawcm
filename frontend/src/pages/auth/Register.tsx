@@ -1,4 +1,4 @@
-import React,{ useState }  from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import "./Register.scss";
@@ -7,7 +7,7 @@ const Register: React.FC = () => {
 
     const navigate = useNavigate();
     const { registerWithEmail } = useAuth();
-    const [username , setUsername] = useState("");
+    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
@@ -20,8 +20,9 @@ const Register: React.FC = () => {
         try {
             await registerWithEmail(username, email, password);
             navigate("/"); // Redirection vers Home
-        } catch (err: any) {
-            setError(err?.response?.data?.error || "Erreur lors de l'inscription");
+        } catch (err) {
+            const apiError = err as { response?: { data?: { error?: string }}};
+            setError(apiError?.response?.data?.error || "Erreur lors de l'inscription");
         } finally {
             setLoading(false);
         }
@@ -31,6 +32,7 @@ const Register: React.FC = () => {
     return (
         <div className="auth-page">
             <form className="auth-form" onSubmit={handleSubmit}>
+                <span className="auth-form__pin" aria-hidden="true" />
                 <h2>Inscription</h2>
                 {error && <div className="error">{error}</div>}
                 <label>Nom d'utilisateur

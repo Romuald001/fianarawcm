@@ -55,7 +55,8 @@ const AdminLayout: React.FC = () => {
         </main>
 
         <footer>
-          &copy; {new Date().getFullYear()} Toilet Finder - Admin Panel
+          <span>&copy; {new Date().getFullYear()} Toilet Finder - Admin Panel</span>
+          <span className="footer-status">Système opérationnel</span>
         </footer>
       </div>
     </div>

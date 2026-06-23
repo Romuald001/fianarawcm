@@ -1,86 +1,149 @@
+/* src/components/Map/FloatingSidebar.scss */
+@use "sass:color";
+@use "../../styles/theme" as *;
+
+// -------------------------------------------------------------
+// Panneau flottant : verre dépoli sur fond carte nocturne,
+// pour se détacher nettement du fond OSM clair en dessous.
+// -------------------------------------------------------------
 .floating-sidebar {
   position: absolute;
   top: 20px;
   left: 20px;
-  width: 260px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(8px);
-  border-radius: 16px;
-  padding: 1.2rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  width: 270px;
+  background: rgba(14, 27, 42, 0.82); // $map-navy translucide
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: $radius-card;
+  padding: 1.3rem;
+  box-shadow: $shadow-card;
   z-index: 500;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
-  font-family: "Poppins", sans-serif;
+  gap: 0.85rem;
+  font-family: $font-body;
+  color: #fff;
   transition: all 0.3s ease;
 
   h3 {
-    font-size: 1.1rem;
-    color: #1565c0;
-    margin-bottom: 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: $font-display;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin: 0;
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50% 50% 50% 0;
+      background: $map-pin;
+      transform: rotate(-45deg);
+      flex-shrink: 0;
+    }
   }
 
   p {
     font-size: 0.85rem;
-    color: #555;
-    line-height: 1.4;
-    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.45;
+    margin: 0;
   }
 
   .sidebar-search {
     padding: 10px 12px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
+    border-radius: $radius-input;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
     outline: none;
     font-size: 0.9rem;
-    transition: all 0.2s;
+    font-family: $font-body;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.45);
+    }
 
     &:focus {
-      border-color: #1976d2;
-      box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+      border-color: $map-route;
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 0 0 3px rgba($map-route, 0.22);
     }
   }
 
   .sidebar-btn {
-    background: #1976d2;
-    color: white;
+    background: $map-route-dark;
+    color: #ffffff;
+    font-family: $font-display;
     font-weight: 600;
+    font-size: 0.9rem;
     border: none;
-    border-radius: 10px;
+    border-radius: $radius-input;
     padding: 10px 0;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 
     &:hover {
-      background: #1565c0;
-      transform: scale(1.02);
+      background: color.adjust($map-route-dark, $lightness: 6%);
+      transform: translateY(-1px);
+    }
+
+    &:focus-visible {
+      @include focus-ring($map-route);
+    }
+  }
+
+  // "Votre position" : action secondaire, plus discrète
+  .locate-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.16);
+    }
+  }
+
+  // "Toilette la plus proche" : action héro, accent corail (marqueur)
+  .nearest-btn {
+    background: $map-pin;
+
+    &:hover {
+      background: color.adjust($map-pin, $lightness: -4%);
     }
   }
 }
 
 .suggestion-list {
   position: absolute;
-  background: white;
-  border: 1px solid #ccc;
+  background: $map-navy;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   width: 100%;
   max-height: 150px;
   overflow-y: auto;
-  border-radius: 8px;
+  border-radius: $radius-input;
   margin-top: 4px;
   padding: 0;
   list-style: none;
   z-index: 9999;
-}
+  box-shadow: $shadow-card;
 
-.suggestion-list li {
-  padding: 8px 10px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
+  li {
+    padding: 8px 10px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: background-color 0.18s ease;
 
-.suggestion-list li:hover {
-  background: #f0f0f0;
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+  }
 }
 
 .sidebar-search-wrapper {
@@ -88,21 +151,9 @@
   width: 100%;
 }
 
-.nearest-btn {
-  background-color: #3b82f6; // bleu moderne
-  color: white;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.nearest-btn:hover {
-  background-color: #2563eb;
-  transform: scale(1.03);
-}
-
-
-
-/* Responsive : cacher la sidebar sur mobile */
+/* -------------------------------------------------------------- */
+/* Responsive : panneau centré et compact sur mobile              */
+/* -------------------------------------------------------------- */
 @media (max-width: 768px) {
   .floating-sidebar {
     width: 90%;

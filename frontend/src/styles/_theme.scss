@@ -1,0 +1,77 @@
+// =============================================================
+// src/styles/_theme.scss
+// Design tokens globaux de l'application Toilet Finder
+// Thème : carte / navigation / géolocalisation
+// Mêmes valeurs que pages/auth/_auth-theme.scss, centralisées ici
+// pour être partagées par toutes les pages (auth, users, ...).
+// =============================================================
+
+@use "sass:color";
+
+// ---- Couleurs (palette "carte nocturne") ----
+$map-navy:        #0E1B2A; // fond carte nuit
+$map-navy-deep:   #081320; // dégradé fond, plus profond
+$map-grid:        rgba(255, 255, 255, 0.06); // lignes de graticule
+$map-route:       #2DD4BF; // accent "itinéraire actif" (teal)
+$map-route-dark:  #19A696;
+$map-route-soft:  rgba(45, 212, 191, 0.12);
+$map-pin:         #FF6B5C; // accent "marqueur" (corail)
+$map-pin-dark:    #E2483B;
+$map-paper:       #F7F5F0; // surface carte claire (cartes / formulaires)
+$map-paper-soft:  #EFEBE2; // surface légèrement plus sombre (zones secondaires)
+$map-ink:         #1A2733; // texte principal
+$map-ink-soft:    #5C6B7A; // texte secondaire
+$map-border:      #E4E0D6;
+$map-error:       #E8554A;
+$map-error-bg:    #FDEAE8;
+
+// ---- Typographie ----
+$font-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+$font-body:    "Inter", "Segoe UI", system-ui, sans-serif;
+
+// ---- Rayon / ombres ----
+$radius-card:  16px;
+$radius-pill:  999px;
+$radius-input: 10px;
+$shadow-card:  0 24px 60px -12px rgba(8, 19, 32, 0.45);
+$shadow-soft:  0 4px 16px rgba(14, 27, 42, 0.08);
+
+// ---- Mixin: trame de carte (graticule + halos) en fond ----
+@mixin map-backdrop {
+  background-color: $map-navy;
+  background-image:
+    linear-gradient(135deg, $map-navy-deep 0%, $map-navy 60%, #102536 100%),
+    repeating-linear-gradient(0deg, $map-grid 0px, $map-grid 1px, transparent 1px, transparent 56px),
+    repeating-linear-gradient(90deg, $map-grid 0px, $map-grid 1px, transparent 1px, transparent 56px);
+  background-blend-mode: normal, screen, screen;
+}
+
+@mixin focus-ring($color: $map-route) {
+  outline: none;
+  border-color: $color;
+  box-shadow: 0 0 0 3px rgba($color, 0.22);
+}
+
+// ---- Pin de localisation (signature visuelle réutilisable) ----
+// Usage : <span class="map-pin" aria-hidden="true" />
+@mixin map-pin-shape($size: 40px, $bg: $map-pin) {
+  position: relative;
+  width: $size;
+  height: $size;
+  border-radius: 50% 50% 50% 0;
+  background: linear-gradient(135deg, $bg, color.adjust($bg, $lightness: -8%));
+  transform: rotate(-45deg);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: $size * 0.32;
+    height: $size * 0.32;
+    background: $map-paper;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

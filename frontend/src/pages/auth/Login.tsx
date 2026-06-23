@@ -1,4 +1,4 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate, Link } from "react-router-dom";
 import "./Login.scss";
@@ -19,8 +19,9 @@ const Login: React.FC = () => {
         try {
             await loginWithEmail(email, password);
             navigate("/"); // Redirection vers Home
-        } catch (err: any) {
-            setError(err?.response?.data?.error || "Erreur de connexion");
+        } catch (err) {
+            const apiError = err as { response?: { data?: { error?: string }}};
+            setError(apiError?.response?.data?.error || "Erreur de connexion");
         } finally {
             setLoading(false);
         }
@@ -28,7 +29,15 @@ const Login: React.FC = () => {
 
     return (
         <div className="auth-page">
+            {/* Décor cartographique purement visuel, aucun impact sur la logique */}
+            <svg className="auth-page__path" viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M -50 650 C 250 600, 350 300, 650 350 S 1050 150, 1250 100" />
+                <path d="M -50 150 C 200 250, 500 50, 800 200 S 1100 600, 1250 700" />
+            </svg>
+
             <form className="auth-form" onSubmit={handleSubmit}>
+                <span className="auth-form__pin" aria-hidden="true" />
+                <p className="auth-form__eyebrow">Bienvenue</p>
                 <h2>Connexion</h2>
                 {error && <div className="error">{error}</div>}
                 <label>Email

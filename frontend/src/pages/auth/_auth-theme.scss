@@ -1,0 +1,45 @@
+// =============================================================
+// _auth-theme.scss
+// Design tokens partagés pour les pages d'authentification
+// Thème : carte / navigation / géolocalisation
+// À importer dans Login.scss et Register.scss
+// =============================================================
+
+// ---- Couleurs (palette "carte nocturne") ----
+$map-navy:        #0E1B2A; // fond carte nuit
+$map-navy-deep:   #081320; // dégradé fond, plus profond
+$map-grid:        rgba(255, 255, 255, 0.06); // lignes de graticule
+$map-route:       #2DD4BF; // accent "itinéraire actif" (teal)
+$map-route-dark:  #19A696;
+$map-pin:         #FF6B5C; // accent "marqueur" (corail)
+$map-paper:       #F7F5F0; // surface carte claire (la fiche du formulaire)
+$map-ink:         #1A2733; // texte principal
+$map-ink-soft:    #5C6B7A; // texte secondaire
+$map-border:      #E4E0D6;
+$map-error:       #E8554A;
+$map-error-bg:    #FDEAE8;
+
+// ---- Typographie ----
+$font-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+$font-body:    "Inter", "Segoe UI", system-ui, sans-serif;
+
+// ---- Rayon / ombres ----
+$radius-card: 16px;
+$radius-input: 10px;
+$shadow-card: 0 24px 60px -12px rgba(8, 19, 32, 0.45);
+
+// ---- Mixin: trame de carte (graticule + "routes") en fond ----
+@mixin map-backdrop {
+  background-color: $map-navy;
+  background-image:
+    linear-gradient(135deg, $map-navy-deep 0%, $map-navy 60%, #102536 100%),
+    repeating-linear-gradient(0deg, $map-grid 0px, $map-grid 1px, transparent 1px, transparent 56px),
+    repeating-linear-gradient(90deg, $map-grid 0px, $map-grid 1px, transparent 1px, transparent 56px);
+  background-blend-mode: normal, screen, screen;
+}
+
+@mixin focus-ring($color: $map-route) {
+  outline: none;
+  border-color: $color;
+  box-shadow: 0 0 0 3px rgba($color, 0.22);
+}
