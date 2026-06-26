@@ -1,7 +1,7 @@
 /* src/layouts/UserLayout.scss */
 @use "sass:color";
 @use "../styles/theme" as *;
-
+ 
 .user-layout {
   font-family: $font-body;
   background: $map-paper;
@@ -9,7 +9,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-
+ 
   // -------------------------------------------------------------
   // Navbar : barre de carte — même fond nocturne que l'auth/hero
   // -------------------------------------------------------------
@@ -24,7 +24,7 @@
     padding: 0.85rem 2rem;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
     z-index: 1000;
-
+ 
     .logo {
       display: flex;
       align-items: center;
@@ -35,7 +35,7 @@
       letter-spacing: 0.01em;
       color: #fff;
       margin: 0;
-
+ 
       // Pin signature devant le nom de la marque
       &::before {
         content: "";
@@ -48,12 +48,12 @@
         flex-shrink: 0;
       }
     }
-
+ 
     nav {
       display: flex;
       align-items: center;
       gap: 1.6rem;
-
+ 
       a {
         color: rgba(255, 255, 255, 0.78);
         text-decoration: none;
@@ -62,22 +62,22 @@
         padding-bottom: 4px;
         border-bottom: 2px solid transparent;
         transition: color 0.2s ease, border-color 0.2s ease;
-
+ 
         &.active {
           color: #fff;
           border-bottom-color: $map-route;
         }
-
+ 
         &:hover {
           color: #fff;
         }
-
+ 
         &:focus-visible {
           @include focus-ring($map-route);
           border-radius: 4px;
         }
       }
-
+ 
       button {
         background: transparent;
         color: $map-pin;
@@ -88,24 +88,24 @@
         font-weight: 600;
         font-size: 0.9rem;
         transition: background-color 0.2s ease, color 0.2s ease;
-
+ 
         &:hover {
           background: $map-pin;
           color: #fff;
         }
-
+ 
         &:focus-visible {
           @include focus-ring($map-pin);
         }
       }
     }
   }
-
+ 
   .content {
     flex: 1;
     padding: 2rem;
   }
-
+ 
   // -------------------------------------------------------------
   // Footer : enrichi façon plateforme (liens + marque + légal)
   // -------------------------------------------------------------
@@ -113,7 +113,7 @@
     background: $map-navy-deep;
     color: rgba(255, 255, 255, 0.65);
     padding: 2.25rem 2rem 1.5rem;
-
+ 
     .footer-grid {
       display: flex;
       justify-content: space-between;
@@ -124,10 +124,10 @@
       padding-bottom: 1.5rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
-
+ 
     .footer-brand {
       max-width: 320px;
-
+ 
       .footer-logo {
         display: flex;
         align-items: center;
@@ -137,7 +137,7 @@
         font-size: 1.05rem;
         color: #fff;
         margin-bottom: 0.5rem;
-
+ 
         &::before {
           content: "";
           display: inline-block;
@@ -149,19 +149,19 @@
           flex-shrink: 0;
         }
       }
-
+ 
       p {
         font-size: 0.85rem;
         line-height: 1.55;
         margin: 0;
       }
     }
-
+ 
     .footer-links {
       display: flex;
       gap: 2.5rem;
       flex-wrap: wrap;
-
+ 
       h4 {
         font-family: $font-display;
         font-size: 0.78rem;
@@ -170,7 +170,7 @@
         color: rgba(255, 255, 255, 0.5);
         margin: 0 0 0.7rem;
       }
-
+ 
       ul {
         list-style: none;
         margin: 0;
@@ -179,19 +179,19 @@
         flex-direction: column;
         gap: 0.5rem;
       }
-
+ 
       a {
         color: rgba(255, 255, 255, 0.75);
         text-decoration: none;
         font-size: 0.88rem;
         transition: color 0.2s ease;
-
+ 
         &:hover {
           color: $map-route;
         }
       }
     }
-
+ 
     .footer-bottom {
       max-width: 1100px;
       margin: 1.25rem auto 0;
@@ -201,38 +201,93 @@
       flex-wrap: wrap;
       gap: 0.75rem;
       font-size: 0.8rem;
-
+ 
       p {
         margin: 0;
       }
     }
   }
 }
-
+ 
 @media (max-width: 768px) {
   .user-layout {
     .navbar {
       flex-direction: column;
-      gap: 0.85rem;
-      padding: 1rem;
-
-      nav {
-        flex-wrap: wrap;
+      align-items: stretch;
+      gap: 0.9rem;
+      padding: 0.9rem 1.1rem;
+ 
+      .logo {
         justify-content: center;
-        gap: 1rem;
+        font-size: 1.1rem;
+      }
+ 
+      nav {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.6rem;
+ 
+        a {
+          text-align: center;
+          padding: 8px 0;
+          border-bottom: none;
+          border-radius: $radius-input;
+          background: rgba(255, 255, 255, 0.05);
+ 
+          &.active {
+            background: rgba($map-route, 0.16);
+            color: $map-route;
+          }
+        }
+ 
+        button {
+          width: 100%;
+          text-align: center;
+        }
       }
     }
-
+ 
+    .content {
+      padding: 1.25rem;
+    }
+ 
     .footer {
+      padding: 2rem 1.25rem 1.25rem;
+ 
       .footer-grid {
         flex-direction: column;
-        gap: 1.5rem;
+        gap: 1.75rem;
+        text-align: center;
       }
-
+ 
+      .footer-brand {
+        max-width: none;
+ 
+        .footer-logo {
+          justify-content: center;
+        }
+      }
+ 
+      .footer-links {
+        justify-content: center;
+        text-align: center;
+ 
+        ul {
+          align-items: center;
+        }
+      }
+ 
       .footer-bottom {
         flex-direction: column;
         text-align: center;
       }
     }
+  }
+}
+ 
+@media (max-width: 420px) {
+  .user-layout .navbar nav a,
+  .user-layout .navbar nav button {
+    font-size: 0.88rem;
   }
 }
