@@ -1,13 +1,14 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 import "./UserLayout.scss";
 
 const UserLayout = () => {
 
     const navigate = useNavigate();
+    const { token, logout, } = useAuth();
 
     const handleLogout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("role");
+        logout();
         navigate("/login");
     }
 
@@ -17,7 +18,7 @@ const UserLayout = () => {
             <header className="navbar">
                 <h2 className="logo">Toilet Finder</h2>
                 <nav>
-                    <NavLink to="/map" className={({ isActive }) => isActive ? "active" : ""}>
+                    <NavLink to="/" className={({ isActive }) => isActive ? "active" : ""}>
                         Carte
                     </NavLink>
 
@@ -29,7 +30,12 @@ const UserLayout = () => {
                         Mes contributions
                     </NavLink>
 
-                    <button onClick={handleLogout}>Déconnexion</button>
+                    {token ? (
+                        <button onClick={handleLogout}>Déconnexion</button>
+                    ) : (
+                        <NavLink to="/login"><button>Connexion</button></NavLink> 
+
+                    )}
                 </nav>
             </header>
 
@@ -51,7 +57,7 @@ const UserLayout = () => {
                         <div>
                             <h4>Navigation</h4>
                             <ul>
-                                <li><NavLink to="/map">Carte</NavLink></li>
+                                <li><NavLink to="/">Carte</NavLink></li>
                                 <li><NavLink to="/add">Ajouter une toilette</NavLink></li>
                                 <li><NavLink to="/cotribution">Mes contributions</NavLink></li>
                             </ul>

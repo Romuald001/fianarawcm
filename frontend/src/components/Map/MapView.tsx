@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from "react-leaflet";
 import L from "leaflet";
+import { useNavigate } from "react-router-dom";
 import type { Toilet } from "../../types/toilet";
 import ToiletForm from "../ToiletForm/ToiletForm";
 import { findNearest } from "../../utils/geo";
+import { useAuth } from "../../hooks/useAuth";
 
 import "leaflet/dist/leaflet.css";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
@@ -11,7 +13,7 @@ import "./MapView.scss";
 import "./FloatingSidebar.scss";
 import icon from "../../assets/icons/T.png";
 
-// ✅ Icône personnalisée pour les toilettes
+// Icône personnalisée pour les toilettes
 const toiletIcon = new L.Icon({
   iconUrl: icon,
   iconSize: [30, 30],
@@ -19,14 +21,14 @@ const toiletIcon = new L.Icon({
   popupAnchor: [0, -30],
 });
 
-// ✅ Icône personnalisée pour la position utilisateur
+// Icône personnalisée pour la position utilisateur
 const userIcon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/64/64113.png",
   iconSize: [35, 35],
   iconAnchor: [17, 35],
 });
 
-// ✅ Coordonnées de quartiers à Fianarantsoa
+// Coordonnées de quartiers à Fianarantsoa
 const quartiers: Record<string, [number, number]> = {
   ambalapaiso: [-21.4542, 47.0845],
   andreba: [-21.4559, 47.0882],
@@ -50,12 +52,16 @@ const MapView: React.FC<MapViewProps> = ({ toilets, onNewToilet }) => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [userPos, setUserPos] = useState<{ lat: number; lng: number } | null>(null);
   const mapRef = useRef<L.Map | null>(null);
-  const routeLayerRef = useRef<L.Polyline | null>(null); // ✅ nom correct
+  const routeLayerRef = useRef<L.Polyline | null>(null); // nom correct
 
-  // ✅ Gérer les clics sur la carte
+  // Gérer les clics sur la carte
   const MapClickHandler = () => {
     useMapEvents({
       click(e) {
+        if (!token) {
+          navigate("/login");
+          return;
+        }
         setSelectedPos(e.latlng);
       },
     });
@@ -68,14 +74,14 @@ const MapView: React.FC<MapViewProps> = ({ toilets, onNewToilet }) => {
     return null;
   };
 
-  // ✅ Zoom progressif
+  // Zoom progressif
   const smoothZoomTo = (lat: number, lng: number, targetZoom = 16) => {
     const map = mapRef.current;
     if (!map) return;
     map.flyTo([lat, lng], targetZoom, { duration: 2 });
   };
 
-  // ✅ Recherche
+  // Recherche
   const handleSearch = (term: string) => {
     const value = term.trim().toLowerCase();
     setSearchTerm(term);
@@ -95,7 +101,7 @@ const MapView: React.FC<MapViewProps> = ({ toilets, onNewToilet }) => {
     else alert("Quartier introuvable dans la province de Fianarantsoa !");
   };
 
-  // ✅ Localiser l'utilisateur
+  // Localiser l'utilisateur
   const locateUser = () => {
     if (!navigator.geolocation) {
       alert("La géolocalisation n’est pas supportée par ce navigateur.");
@@ -149,7 +155,7 @@ const MapView: React.FC<MapViewProps> = ({ toilets, onNewToilet }) => {
         )
         .openOn(mapRef.current!);
 
-      await drawRouteORS(userPos, { lat: nearest.lat, lng: nearest.lng }); // ✅ correction du type
+      await drawRouteORS(userPos, { lat: nearest.lat, lng: nearest.lng }); // correction du type
     }
   };
 
@@ -182,12 +188,12 @@ const MapView: React.FC<MapViewProps> = ({ toilets, onNewToilet }) => {
       if (!res.ok) throw new Error("Erreur API ORS");
       const data = await res.json();
 
-      // ✅ Supprimer l'ancien tracé s’il existe
+      // Supprimer l'ancien tracé s’il existe
       if (routeLayerRef.current) {
         mapRef.current?.removeLayer(routeLayerRef.current);
       }
 
-      // ✅ Tracer la nouvelle route
+      // Tracer la nouvelle route
       const coords = data.features[0].geometry.coordinates.map((c: [number, number]) => [c[1], c[0]]);
       const routeLine = L.polyline(coords, { color: "blue", weight: 4 }).addTo(mapRef.current!);
       routeLayerRef.current = routeLine;

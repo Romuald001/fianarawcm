@@ -30,7 +30,7 @@ const ProtectedRoute: React.FC<{ requiredRole: "user" | "admin" }> = ({ required
   }
 
   if (!token) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
 
   if (role !== requiredRole) {
@@ -49,13 +49,17 @@ const AppRoutes: React.FC = () => {
     <Router>
       <Routes>
         {/* Routes publiques */}
+        <Route element={<UserLayout />}>
+          <Route path="/" element={<Home />}/>
+        </Route>
+
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
         {/* Routes utilisateur */}
         <Route element={<ProtectedRoute requiredRole="user" />}>
           <Route element={<UserLayout />}>
-            <Route path="/" element={<Home />}/>
+          
             <Route path="/add" element={<AddToilet />}/>
             <Route path="/cotribution" element={<Contribution />}/>
           </Route>

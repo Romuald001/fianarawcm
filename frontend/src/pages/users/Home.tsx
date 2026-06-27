@@ -4,6 +4,7 @@ import { toilet } from "../../services/toilet.api";
 import MapView from "../../components/Map/MapView";
 import "./Home.scss";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 const Home: React.FC = () => {
 
@@ -12,6 +13,7 @@ const Home: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
+    const { token } = useAuth();
 
     // Fonction pour récupérer les toilettes approuvées depuis l'API
     const fetchToilets = async () => {
@@ -51,7 +53,7 @@ const Home: React.FC = () => {
                     </p>
                     <button
                         className="add-btn"
-                        onClick={() => navigate("/add")}
+                        onClick={() => navigate(token ? "/add" : "/login")}
                     >
                         ➕ Ajouter une toilette
                     </button>
