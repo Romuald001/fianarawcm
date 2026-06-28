@@ -53,6 +53,8 @@ const MapView: React.FC<MapViewProps> = ({ toilets, onNewToilet }) => {
   const [userPos, setUserPos] = useState<{ lat: number; lng: number } | null>(null);
   const mapRef = useRef<L.Map | null>(null);
   const routeLayerRef = useRef<L.Polyline | null>(null); // nom correct
+  const { token } = useAuth();
+  const navigate = useNavigate();
 
   // Gérer les clics sur la carte
   const MapClickHandler = () => {
@@ -191,7 +193,7 @@ const MapView: React.FC<MapViewProps> = ({ toilets, onNewToilet }) => {
       // Supprimer l'ancien tracé s’il existe
       if (routeLayerRef.current) {
         mapRef.current?.removeLayer(routeLayerRef.current);
-      }
+      } 
 
       // Tracer la nouvelle route
       const coords = data.features[0].geometry.coordinates.map((c: [number, number]) => [c[1], c[0]]);
@@ -219,7 +221,7 @@ const MapView: React.FC<MapViewProps> = ({ toilets, onNewToilet }) => {
       {toilets
         .filter((t) => t.status === "approved")
         .map((t) => (
-          <Marker key={t.id} position={[parseFloat(t.lat as any), parseFloat(t.lng as any)]} icon={toiletIcon}>
+          <Marker key={t.id} position={[parseFloat(String(t.lat)), parseFloat(String(t.lng))]} icon={toiletIcon}>
             <Popup>
               <h4>{t.name}</h4>
               <p>{t.description}</p>
@@ -228,7 +230,7 @@ const MapView: React.FC<MapViewProps> = ({ toilets, onNewToilet }) => {
               <p>{t.status}</p>
             </Popup>
           </Marker>
-        ))}
+        ))}s
 
       <div
         className="floating-sidebar"

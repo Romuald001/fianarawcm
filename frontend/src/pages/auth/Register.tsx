@@ -46,6 +46,10 @@ const Register: React.FC = () => {
                 </label>
 
                 <button type="submit" disabled={loading}>{loading ? "Inscription..." : "S'inscrire"}</button>
+                
+                <div className="auth-footer">
+                    <span>Déjà un compte ? <a href="/login">Se connecter</a></span>
+                </div>
             </form>
         </div>
     );

@@ -142,6 +142,24 @@
     }
   }
 
+
+  .auth-footer {
+    text-align: center;
+    font-size: 0.88rem;
+    color: $map-ink-soft;
+    margin-top: 4px;
+
+    a {
+      color: $map-route-dark;
+      font-weight: 600;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
   .error {
     display: flex;
     align-items: center;
