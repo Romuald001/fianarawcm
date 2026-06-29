@@ -48,6 +48,47 @@
         flex-shrink: 0;
       }
     }
+
+    .menu-toggle {
+      display: none; // visible uniquement en mobile, cf. media query
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 1100;
+
+      span {
+        display: block;
+        height: 2px;
+        width: 100%;
+        background: #fff;
+        border-radius: 2px;
+        transition: transform 0.25s ease, opacity 0.25s ease;
+      }
+
+      // Transformation en croix quand le menu est ouvert
+      &.is-open {
+        span:nth-child(1) {
+          transform: translateY(7px) rotate(45deg);
+        }
+        span:nth-child(2) {
+          opacity: 0;
+        }
+        span:nth-child(3) {
+          transform: translateY(-7px) rotate(-45deg);
+        }
+      }
+
+      &:focus-visible {
+        @include focus-ring($map-route);
+        border-radius: 4px;
+      }
+    }
  
     nav {
       display: flex;
@@ -212,21 +253,39 @@
 @media (max-width: 768px) {
   .user-layout {
     .navbar {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0.9rem;
-      padding: 0.9rem 1.1rem;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 0.85rem 1.1rem;
+      position: relative;
  
       .logo {
-        justify-content: center;
         font-size: 1.1rem;
+      }
+
+      // Le hamburger remplace l'affichage permanent des liens
+      .menu-toggle {
+        display: flex;  
       }
  
       nav {
+        // Caché par défaut ; déployé en overlay sous la navbar
+        // quand React ajoute la classe "open" (état isMenuOpen).
+        display: none;
         flex-direction: column;
         align-items: stretch;
         gap: 0.6rem;
- 
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        padding: 1rem 1.1rem 1.25rem;
+        @include map-backdrop;
+        box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.35);
+
+        &.open {
+          display: flex;
+        }
+
         a {
           text-align: center;
           padding: 8px 0;

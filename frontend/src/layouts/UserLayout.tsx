@@ -1,32 +1,49 @@
+import { useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import "./UserLayout.scss";
+
 
 const UserLayout = () => {
 
     const navigate = useNavigate();
     const { token, logout, } = useAuth();
-
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+;
     const handleLogout = () => {
         logout();
         navigate("/login");
     }
+
+    const closeMenu = () => setIsMenuOpen(false);
 
 
     return (
         <div className="user-layout">
             <header className="navbar">
                 <h2 className="logo">Toilet Finder</h2>
-                <nav>
-                    <NavLink to="/" className={({ isActive }) => isActive ? "active" : ""}>
+
+                <button
+                    className={'menu-toggle ${isMenuOpen ? ""}'}
+                    onClick={() => setIsMenuOpen((prev) => !prev)}
+                    aria-label={isMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+                    aria-expanded={isMenuOpen}
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <nav className={isMenuOpen ? "open" : ""}>
+                    <NavLink to="/" onClick={closeMenu} className={({ isActive }) => isActive ? "active" : ""}>
                         Carte
                     </NavLink>
 
-                    <NavLink to="/add" className={({ isActive }) => isActive ? "active" : ""}>
+                    <NavLink to="/add" onClick={closeMenu} className={({ isActive }) => isActive ? "active" : ""}>
                         Ajouter une toilette
                     </NavLink>
 
-                    <NavLink to="/cotribution" className={({ isActive }) => isActive ? "active" : ""}>
+                    <NavLink to="/cotribution" onClick={closeMenu} className={({ isActive }) => isActive ? "active" : ""}>
                         Mes contributions
                     </NavLink>
 
