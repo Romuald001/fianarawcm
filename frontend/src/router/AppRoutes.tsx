@@ -14,6 +14,7 @@ import UserLayout from "../layouts/UserLayout";
 import Home from "../pages/users/Home";
 import AddToilet from "../pages/users/AddToilet";
 import Contribution from "../pages/users/Contribution";
+import About from "../pages/users/About";
 
 import AdminLayout from "../layouts/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
@@ -51,6 +52,7 @@ const AppRoutes: React.FC = () => {
         {/* Routes publiques */}
         <Route element={<UserLayout />}>
           <Route path="/" element={<Home />}/>
+          <Route path="/about" element={<About/>}/>
         </Route>
 
         <Route path="/login" element={<Login />} />
@@ -62,6 +64,7 @@ const AppRoutes: React.FC = () => {
           
             <Route path="/add" element={<AddToilet />}/>
             <Route path="/cotribution" element={<Contribution />}/>
+            
           </Route>
         </Route>
 

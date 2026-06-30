@@ -24,7 +24,7 @@ const UserLayout = () => {
                 <h2 className="logo">Toilet Finder</h2>
 
                 <button
-                    className={'menu-toggle ${isMenuOpen ? ""}'}
+                    className={'menu-toggle ${isMenuOpen ? "is-open" : ""}'}
                     onClick={() => setIsMenuOpen((prev) => !prev)}
                     aria-label={isMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
                     aria-expanded={isMenuOpen}
@@ -45,6 +45,10 @@ const UserLayout = () => {
 
                     <NavLink to="/cotribution" onClick={closeMenu} className={({ isActive }) => isActive ? "active" : ""}>
                         Mes contributions
+                    </NavLink>
+
+                    <NavLink to="/about" onClick={closeMenu} className={({ isActive }) => isActive ? "active" : ""}>
+                        A propos
                     </NavLink>
 
                     {token ? (

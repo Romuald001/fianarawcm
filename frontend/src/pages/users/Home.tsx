@@ -3,8 +3,6 @@ import type { Toilet } from "../../types/toilet";
 import { toilet } from "../../services/toilet.api";
 import MapView from "../../components/Map/MapView";
 import "./Home.scss";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
 
 const Home: React.FC = () => {
 
@@ -12,8 +10,6 @@ const Home: React.FC = () => {
     const [toilets, setToilets] = useState<Toilet[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const navigate = useNavigate();
-    const { token } = useAuth();
 
     // Fonction pour récupérer les toilettes approuvées depuis l'API
     const fetchToilets = async () => {
@@ -42,37 +38,11 @@ const Home: React.FC = () => {
     };
 
     return (
-        <div className="home-page">
-            <section className="hero">
-                <div className="hero-text">
-                    <span className="hero-eyebrow">Fianarantsoa</span>
-                    <h1>Bienvenue sur Toilet Finder 🚻</h1>
-                    <p>
-                        Trouvez facilement les toilettes publiques les plus proches de vous à Fianarantsoa.
-                        Aidez la communauté en ajoutant celles que vous découvrez !
-                    </p>
-                    <button
-                        className="add-btn"
-                        onClick={() => navigate(token ? "/add" : "/login")}
-                    >
-                        ➕ Ajouter une toilette
-                    </button>
-                </div>
-            </section>
-
+        <div className="home-page">    
             <h2 className="map-title">🗺️ Carte des toilettes</h2>
             {loading && <p className="status-text">Chargement des toilettes...</p>}
             {error && <p className="error">{error}</p>}
             <MapView toilets={toilets} onNewToilet={handleNewToilet} />
-
-            <section className="info-card">
-                <h2>🌍 Notre mission</h2>
-                <p>
-                    Toilet Finder vise à rendre la ville plus propre et plus accessible en permettant à chacun
-                    de localiser, noter et partager des informations sur les toilettes publiques. Ensemble,
-                    construisons un environnement plus sain et solidaire.
-                </p>
-            </section>
         </div>
     );
 };
